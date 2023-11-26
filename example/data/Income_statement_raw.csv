@@ -1,0 +1,64 @@
+CSV_income-statement_Annual_As_Originally_Reported,2018,2019,2020,2021,2022,TTM
+Gross Profit,75947000.,79585000.,105923000.,129516000.,119226000.,121107000.
+    Total Revenue,267992000.,274107000.,329448000.,375886000.,370174000.,377602000.
+        Business Revenue,250857000.,257068000.,304614000.,348293000.,343241000.,349832000.
+        Other Revenue,17135000.,17039000.,24834000.,27593000.,26933000.,27770000.
+    Cost of Revenue,-192045000.,-194522000.,-223525000.,-246370000.,-250948000.,-256495000.
+        Cost of Goods and Services,-174880000.,-176112000.,-200755000.,-222112000.,-226735000.,-231013000.
+"        Dpreciation & Amortization, Cost of Revenue",-15617000.,-16355000.,-17962000.,-19279000.,-19175000.,-19987000.
+        Other Costof Revenue,-1548000.,-2055000.,-4808000.,-4979000.,-5038000.,-5495000.
+Operating Income/Expenses,-32640000.,-27296000.,-27254000.,-35190000.,-37471000.,-41030000.
+"    Selling, General and Administrative Expenses",-30827000.,-25880000.,-25827000.,-33949000.,-37471000.,-41030000.
+        General and Administrative Expenses,-30827000.,-25880000.,-25827000.,-33949000.,-37471000.,-41030000.
+"    Depreciation, Amortization and Depletion",-1813000.,-1416000.,-1427000.,-1241000.,,
+        Depreciation and Amortization,-1813000.,-1416000.,-1427000.,-1241000.,,
+Total Operating Profit/Loss,43307000.,52289000.,78669000.,94326000.,81755000.,80077000.
+"Non-Operating Income/Expense, Total",-25041000.,-29873000.,-54027000.,-50022000.,-24561000.,-37302000.
+    Total Net Finance Income/Expense,-23301000.,-25763000.,-32731000.,-25465000.,-25895000.,-34900000.
+        Net Interest Income/Expense,-23301000.,-25763000.,-32731000.,-25465000.,-25895000.,-34900000.
+            Interest Expense Net of Capitalized Interest,-23301000.,-25763000.,-32731000.,-25465000.,-25895000.,-34900000.
+    Irregular Income/Expense,-502000.,.,-21351000.,-24534000.,1252000.,-3042000.
+        Disposal of Businesses,,,,-1022000.,-2029000.,-3391000.
+        Gain/Loss on Extinguishment of Debt,-502000.,.,-6000.,-23807000.,-190000.,-190000.
+        Other Irregular Income/Expense,,,97000.,-61000.,3471000.,539000.
+        Fixed Asset Disposals,,,-21442000.,856000.,,
+        Impairment/Write Off/Write Down of Capital Assets,,,,-500000.,,
+        Goodwill Impairment/Write Off,,,,.,,
+"    Other Income/Expense, Non-Operating",-1238000.,-4110000.,55000.,-23000.,82000.,640000.
+    Net Investment Income,,,,,,
+        Gain/Loss on Investments and Other Financial Instruments,,,,,,
+Pretax Income,18266000.,22416000.,24642000.,44304000.,57194000.,42775000.
+Provision for Income Tax,-6621000.,-7883000.,-8552000.,-11145000.,-15813000.,-12780000.
+Net Income before Extraordinary Items and Discontinued Operations,11645000.,14533000.,16090000.,33159000.,41381000.,29995000.
+Net Income after Extraordinary Items and Discontinued Operations,11645000.,14533000.,16090000.,33159000.,41381000.,29995000.
+Net Income after Non-Controlling/Minority Interests,11645000.,14533000.,16090000.,33159000.,41381000.,29995000.
+Other Adjustments to Net Income Available to Common Stockholders,-57000.,-62000.,-46000.,-53000.,-26000.,-199000.
+Net Income Available to Common Stockholders,11588000.,14471000.,16044000.,33106000.,41355000.,29796000.
+Diluted Net Income Available to Common Stockholders,11588000.,14471000.,16044000.,33106000.,41355000.,29796000.
+Income Statement Supplemental Section,,,,,,
+    Reported Normalized and Operating Income/Expense Supplemental Section,,,,,,
+"        Total Revenue as Reported, Supplemental",267992000.,274107000.,329448000.,375886000.,370174000.,377602000.
+        Reported Total Operating Profit/Loss,43307000.,52289000.,57227000.,93660000.,79726000.,76686000.
+        Reported Normalized Income,21566000.,22532000.,33683000.,55263000.,41086000.,32094000.
+        Reported Effective Tax Rate,,.33,.35,.25,.28,
+        Reported Normalized EBITDA,70192000.,76587000.,104250000.,126161000.,109312000.,109397000.
+Discontinued Operations,,,,,,
+Preferred/Other Stock Distribution,,,,,,
+    Preferred Stock Dividends,,,,,,
+Basic EPS,.64,.81,.9,1.9,2.78,2.02
+    Basic EPS from Continuing Operations,.64,.81,.9,1.9,2.78,2.02
+    Basic EPS from Discontinued Operations,,,,,,
+Diluted EPS,.63,.8,.89,1.81,2.63,1.92
+    Diluted EPS from Continuing Operations,.63,.8,.89,1.81,2.63,1.93
+    Diluted EPS from Discontinued Operations,,,,,,
+Basic Weighted Average Shares Outstanding,17971000.,17877000.,17872000.,17409000.,14857000.,14769250.
+Diluted Weighted Average Shares Outstanding,18374000.,18005000.,18077000.,18266000.,15710000.,15433250.
+Reported Normalized Basic EPS,1.19,1.26,1.88,3.17,2.76,2.16
+Reported Normalized Diluted EPS,1.17,1.25,1.86,3.02,2.61,2.06
+Total Dividend Per Share,.3,.3,.34,.41,.45,.45
+    Regular Dividend Per Share Calc,.3,.3,.34,.41,.45,.45
+Basic EPS,.64,.81,.9,1.9,2.78,2.02
+Diluted EPS,.63,.8,.89,1.81,2.63,1.93
+Basic WASO,17971000.,17877000.,17872000.,17409000.,14857000.,14769250.
+Diluted WASO,18374000.,18005000.,18077000.,18266000.,15710000.,15433250.
+Fiscal year ends in Dec 31 | USD,,,,,,

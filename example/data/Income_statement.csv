@@ -1,64 +1,7 @@
-CSV_income-statement_Annual_As_Originally_Reported,2018,2019,2020,2021,2022,TTM
-Gross Profit,75947000.,79585000.,105923000.,129516000.,119226000.,121107000.
-    Total Revenue,267992000.,274107000.,329448000.,375886000.,370174000.,377602000.
-        Business Revenue,250857000.,257068000.,304614000.,348293000.,343241000.,349832000.
-        Other Revenue,17135000.,17039000.,24834000.,27593000.,26933000.,27770000.
-    Cost of Revenue,-192045000.,-194522000.,-223525000.,-246370000.,-250948000.,-256495000.
-        Cost of Goods and Services,-174880000.,-176112000.,-200755000.,-222112000.,-226735000.,-231013000.
-"        Dpreciation & Amortization, Cost of Revenue",-15617000.,-16355000.,-17962000.,-19279000.,-19175000.,-19987000.
-        Other Costof Revenue,-1548000.,-2055000.,-4808000.,-4979000.,-5038000.,-5495000.
-Operating Income/Expenses,-32640000.,-27296000.,-27254000.,-35190000.,-37471000.,-41030000.
-"    Selling, General and Administrative Expenses",-30827000.,-25880000.,-25827000.,-33949000.,-37471000.,-41030000.
-        General and Administrative Expenses,-30827000.,-25880000.,-25827000.,-33949000.,-37471000.,-41030000.
-"    Depreciation, Amortization and Depletion",-1813000.,-1416000.,-1427000.,-1241000.,,
-        Depreciation and Amortization,-1813000.,-1416000.,-1427000.,-1241000.,,
-Total Operating Profit/Loss,43307000.,52289000.,78669000.,94326000.,81755000.,80077000.
-"Non-Operating Income/Expense, Total",-25041000.,-29873000.,-54027000.,-50022000.,-24561000.,-37302000.
-    Total Net Finance Income/Expense,-23301000.,-25763000.,-32731000.,-25465000.,-25895000.,-34900000.
-        Net Interest Income/Expense,-23301000.,-25763000.,-32731000.,-25465000.,-25895000.,-34900000.
-            Interest Expense Net of Capitalized Interest,-23301000.,-25763000.,-32731000.,-25465000.,-25895000.,-34900000.
-    Irregular Income/Expense,-502000.,.,-21351000.,-24534000.,1252000.,-3042000.
-        Disposal of Businesses,,,,-1022000.,-2029000.,-3391000.
-        Gain/Loss on Extinguishment of Debt,-502000.,.,-6000.,-23807000.,-190000.,-190000.
-        Other Irregular Income/Expense,,,97000.,-61000.,3471000.,539000.
-        Fixed Asset Disposals,,,-21442000.,856000.,,
-        Impairment/Write Off/Write Down of Capital Assets,,,,-500000.,,
-        Goodwill Impairment/Write Off,,,,.,,
-"    Other Income/Expense, Non-Operating",-1238000.,-4110000.,55000.,-23000.,82000.,640000.
-    Net Investment Income,,,,,,
-        Gain/Loss on Investments and Other Financial Instruments,,,,,,
-Pretax Income,18266000.,22416000.,24642000.,44304000.,57194000.,42775000.
-Provision for Income Tax,-6621000.,-7883000.,-8552000.,-11145000.,-15813000.,-12780000.
-Net Income before Extraordinary Items and Discontinued Operations,11645000.,14533000.,16090000.,33159000.,41381000.,29995000.
-Net Income after Extraordinary Items and Discontinued Operations,11645000.,14533000.,16090000.,33159000.,41381000.,29995000.
-Net Income after Non-Controlling/Minority Interests,11645000.,14533000.,16090000.,33159000.,41381000.,29995000.
-Other Adjustments to Net Income Available to Common Stockholders,-57000.,-62000.,-46000.,-53000.,-26000.,-199000.
-Net Income Available to Common Stockholders,11588000.,14471000.,16044000.,33106000.,41355000.,29796000.
-Diluted Net Income Available to Common Stockholders,11588000.,14471000.,16044000.,33106000.,41355000.,29796000.
-Income Statement Supplemental Section,,,,,,
-    Reported Normalized and Operating Income/Expense Supplemental Section,,,,,,
-"        Total Revenue as Reported, Supplemental",267992000.,274107000.,329448000.,375886000.,370174000.,377602000.
-        Reported Total Operating Profit/Loss,43307000.,52289000.,57227000.,93660000.,79726000.,76686000.
-        Reported Normalized Income,21566000.,22532000.,33683000.,55263000.,41086000.,32094000.
-        Reported Effective Tax Rate,,.33,.35,.25,.28,
-        Reported Normalized EBITDA,70192000.,76587000.,104250000.,126161000.,109312000.,109397000.
-Discontinued Operations,,,,,,
-Preferred/Other Stock Distribution,,,,,,
-    Preferred Stock Dividends,,,,,,
-Basic EPS,.64,.81,.9,1.9,2.78,2.02
-    Basic EPS from Continuing Operations,.64,.81,.9,1.9,2.78,2.02
-    Basic EPS from Discontinued Operations,,,,,,
-Diluted EPS,.63,.8,.89,1.81,2.63,1.92
-    Diluted EPS from Continuing Operations,.63,.8,.89,1.81,2.63,1.93
-    Diluted EPS from Discontinued Operations,,,,,,
-Basic Weighted Average Shares Outstanding,17971000.,17877000.,17872000.,17409000.,14857000.,14769250.
-Diluted Weighted Average Shares Outstanding,18374000.,18005000.,18077000.,18266000.,15710000.,15433250.
-Reported Normalized Basic EPS,1.19,1.26,1.88,3.17,2.76,2.16
-Reported Normalized Diluted EPS,1.17,1.25,1.86,3.02,2.61,2.06
-Total Dividend Per Share,.3,.3,.34,.41,.45,.45
-    Regular Dividend Per Share Calc,.3,.3,.34,.41,.45,.45
-Basic EPS,.64,.81,.9,1.9,2.78,2.02
-Diluted EPS,.63,.8,.89,1.81,2.63,1.93
-Basic WASO,17971000.,17877000.,17872000.,17409000.,14857000.,14769250.
-Diluted WASO,18374000.,18005000.,18077000.,18266000.,15710000.,15433250.
-Fiscal year ends in Dec 31 | USD,,,,,,
+Date,Gross Profit,    Total Revenue,        Business Revenue,        Other Revenue,    Cost of Revenue,        Cost of Goods and Services,"        Dpreciation & Amortization, Cost of Revenue",        Other Costof Revenue,Operating Income/Expenses,"    Selling, General and Administrative Expenses",        General and Administrative Expenses,"    Depreciation, Amortization and Depletion",        Depreciation and Amortization,Total Operating Profit/Loss,"Non-Operating Income/Expense, Total",    Total Net Finance Income/Expense,        Net Interest Income/Expense,            Interest Expense Net of Capitalized Interest,    Irregular Income/Expense,        Disposal of Businesses,        Gain/Loss on Extinguishment of Debt,        Other Irregular Income/Expense,        Fixed Asset Disposals,        Impairment/Write Off/Write Down of Capital Assets,        Goodwill Impairment/Write Off,"    Other Income/Expense, Non-Operating",    Net Investment Income,        Gain/Loss on Investments and Other Financial Instruments,Pretax Income,Provision for Income Tax,Net Income before Extraordinary Items and Discontinued Operations,Net Income after Extraordinary Items and Discontinued Operations,Net Income after Non-Controlling/Minority Interests,Other Adjustments to Net Income Available to Common Stockholders,Net Income Available to Common Stockholders,Diluted Net Income Available to Common Stockholders,Income Statement Supplemental Section,    Reported Normalized and Operating Income/Expense Supplemental Section,"        Total Revenue as Reported, Supplemental",        Reported Total Operating Profit/Loss,        Reported Normalized Income,        Reported Effective Tax Rate,        Reported Normalized EBITDA,Discontinued Operations,Preferred/Other Stock Distribution,    Preferred Stock Dividends,Basic EPS,    Basic EPS from Continuing Operations,    Basic EPS from Discontinued Operations,Diluted EPS,    Diluted EPS from Continuing Operations,    Diluted EPS from Discontinued Operations,Basic Weighted Average Shares Outstanding,Diluted Weighted Average Shares Outstanding,Reported Normalized Basic EPS,Reported Normalized Diluted EPS,Total Dividend Per Share,    Regular Dividend Per Share Calc,Basic EPS,Diluted EPS,Basic WASO,Diluted WASO,Fiscal year ends in Dec 31 | USD
+2018-12-31,75947000.0,267992000.0,250857000.0,17135000.0,-192045000.0,-174880000.0,-15617000.0,-1548000.0,-32640000.0,-30827000.0,-30827000.0,-1813000.0,-1813000.0,43307000.0,-25041000.0,-23301000.0,-23301000.0,-23301000.0,-502000.0,,-502000.0,,,,,-1238000.0,,,18266000.0,-6621000.0,11645000.0,11645000.0,11645000.0,-57000.0,11588000.0,11588000.0,,,267992000.0,43307000.0,21566000.0,,70192000.0,,,,0.64,0.64,,0.63,0.63,,17971000.0,18374000.0,1.19,1.17,0.3,0.3,0.64,0.63,17971000.0,18374000.0,
+2019-12-31,79585000.,274107000.,257068000.,17039000.,-194522000.,-176112000.,-16355000.,-2055000.,-27296000.,-25880000.,-25880000.,-1416000.,-1416000.,52289000.,-29873000.,-25763000.,-25763000.,-25763000.,.,,.,,,,,-4110000.,,,22416000.,-7883000.,14533000.,14533000.,14533000.,-62000.,14471000.,14471000.,,,274107000.,52289000.,22532000.,.33,76587000.,,,,.81,.81,,.8,.8,,17877000.,18005000.,1.26,1.25,.3,.3,.81,.8,17877000.,18005000.,
+2020-12-31,105923000.0,329448000.0,304614000.0,24834000.0,-223525000.0,-200755000.0,-17962000.0,-4808000.0,-27254000.0,-25827000.0,-25827000.0,-1427000.0,-1427000.0,78669000.0,-54027000.0,-32731000.0,-32731000.0,-32731000.0,-21351000.0,,-6000.0,97000.0,-21442000.0,,,55000.0,,,24642000.0,-8552000.0,16090000.0,16090000.0,16090000.0,-46000.0,16044000.0,16044000.0,,,329448000.0,57227000.0,33683000.0,0.35,104250000.0,,,,0.9,0.9,,0.89,0.89,,17872000.0,18077000.0,1.88,1.86,0.34,0.34,0.9,0.89,17872000.0,18077000.0,
+2021-12-31,129516000.,375886000.,348293000.,27593000.,-246370000.,-222112000.,-19279000.,-4979000.,-35190000.,-33949000.,-33949000.,-1241000.,-1241000.,94326000.,-50022000.,-25465000.,-25465000.,-25465000.,-24534000.,-1022000.,-23807000.,-61000.,856000.,-500000.,.,-23000.,,,44304000.,-11145000.,33159000.,33159000.,33159000.,-53000.,33106000.,33106000.,,,375886000.,93660000.,55263000.,.25,126161000.,,,,1.9,1.9,,1.81,1.81,,17409000.,18266000.,3.17,3.02,.41,.41,1.9,1.81,17409000.,18266000.,
+2022-12-31,119226000.0,370174000.0,343241000.0,26933000.0,-250948000.0,-226735000.0,-19175000.0,-5038000.0,-37471000.0,-37471000.0,-37471000.0,,,81755000.0,-24561000.0,-25895000.0,-25895000.0,-25895000.0,1252000.0,-2029000.0,-190000.0,3471000.0,,,,82000.0,,,57194000.0,-15813000.0,41381000.0,41381000.0,41381000.0,-26000.0,41355000.0,41355000.0,,,370174000.0,79726000.0,41086000.0,0.28,109312000.0,,,,2.78,2.78,,2.63,2.63,,14857000.0,15710000.0,2.76,2.61,0.45,0.45,2.78,2.63,14857000.0,15710000.0,
+2023-12-31,121107000.0,377602000.0,349832000.0,27770000.0,-256495000.0,-231013000.0,-19987000.0,-5495000.0,-41030000.0,-41030000.0,-41030000.0,,,80077000.0,-37302000.0,-34900000.0,-34900000.0,-34900000.0,-3042000.0,-3391000.0,-190000.0,539000.0,,,,640000.0,,,42775000.0,-12780000.0,29995000.0,29995000.0,29995000.0,-199000.0,29796000.0,29796000.0,,,377602000.0,76686000.0,32094000.0,,109397000.0,,,,2.02,2.02,,1.92,1.93,,14769250.0,15433250.0,2.16,2.06,0.45,0.45,2.02,1.93,14769250.0,15433250.0,
