@@ -20,11 +20,7 @@ class Summarizer(ABC):
         pass
 
     @classmethod
-    def base_summary(self) -> str:
-        pass
-
-    @classmethod
-    def cols_info(cls, df: pd.DataFrame, n_samples=3) -> list[dict]:
+    def base_summary(cls, df: pd.DataFrame, n_samples=3) -> list[dict]:
         def get_samples(column):
             non_null = column.dropna().unique()
             return non_null[:n_samples].tolist()
@@ -70,10 +66,10 @@ class Summarizer(ABC):
         generation_config: TextGenerationConfig,
     ):
         
-        data_info = self.cols_info(data)
-        base_summary = {
+        base_summary = self.base_summary(data)
+        summary = {
             "dataset_description": "",
-            "fields": data_info,
+            "fields": base_summary,
         }
 
 

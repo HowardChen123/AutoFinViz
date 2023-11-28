@@ -20,7 +20,7 @@ class TestColsInfo(unittest.TestCase):
             'cat_col': pd.Categorical(['a', 'b', 'a'])
         })
 
-        result = self.test_class_instance.cols_info(df)
+        result = self.test_class_instance.base_summary(df)
         expected_dtypes = ['number', 'number', 'boolean', 'string', 'date', 'category']
 
         for col, expected_dtype in zip(result, expected_dtypes):
