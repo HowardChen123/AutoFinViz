@@ -2,6 +2,9 @@ import pandas as pd
 from abc import ABC, abstractmethod
 from openai import OpenAI
 import json
+import re
+
+# from ...utils import get_api_key
 
 class Summarizer():
     def __init__(self) -> None:
@@ -81,7 +84,7 @@ class Summarizer():
 
 
         system_prompt += """
-        i) ONLY return Executable Python code
+        i) ONLY return Executable Python code, nothing else
         ii) NO NEED TO read the dataset into a dataframe
         iii) DO NOT print out the new values
         iv) USE "df" to represent the dataframe in the code
@@ -94,7 +97,7 @@ class Summarizer():
         Can you provide executable Python code to add the following columns
         {new_metrics}
 
-        ONLY return Executable Python code
+        ONLY return Executable Python code, nothing else
         USE "df" to represent the dataframe in the code
         Code must not require further input
         
@@ -108,6 +111,15 @@ class Summarizer():
         ])
 
         return completion.choices[0].message.content
+    
+    def update_df(self,  df: pd.DataFrame, code: str):
+
+        try:
+            exec(code)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            # self.update_df(df, code)
+
 
 
     def base_summary(self, df: pd.DataFrame, n_samples=3) -> list[dict]:
@@ -166,7 +178,10 @@ class Summarizer():
 
         print(new_col_code)
 
-        # self.__update_df(df, new_col_code)
+
+        self.update_df(df, new_col_code)
+
+        print(df)
         
         base_summary = self.base_summary(df)
         summary = {
@@ -181,9 +196,13 @@ if __name__ == "__main__":
 
     summarizer = Summarizer()
 
-    df = pd.read_csv("example/data/Stock_price_TSLA.csv")
-    df_name = "Stock_price_TSLA"
-    category = "Market Dataset"
+    # df = pd.read_csv("example/data/Stock_price_TSLA.csv")
+    # df_name = "Stock_price_TSLA"
+    # category = "Market Dataset"
+
+    df = pd.read_csv("example/data/Consumer_price_index.csv")
+    df_name = "Consumer_price_index"
+    category = "Economic Dataset"
 
     def get_api_key():
         try:
