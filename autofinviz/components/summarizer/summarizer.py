@@ -122,7 +122,7 @@ class Summarizer():
 
 
 
-    def base_summary(self, df: pd.DataFrame, n_samples=3) -> list[dict]:
+    def base_summary(self, df: pd.DataFrame, n_samples=3) -> list:
         def get_samples(column):
             non_null = column.dropna().unique()
             return non_null[:n_samples].tolist()
@@ -196,9 +196,9 @@ if __name__ == "__main__":
 
     summarizer = Summarizer()
 
-    # df = pd.read_csv("example/data/Stock_price_TSLA.csv")
-    # df_name = "Stock_price_TSLA"
-    # category = "Market Dataset"
+    df = pd.read_csv("example/data/Stock_price_TSLA.csv")
+    df_name = "Stock_price_TSLA"
+    category = "Market Dataset"
 
     df = pd.read_csv("example/data/Consumer_price_index.csv")
     df_name = "Consumer_price_index"
