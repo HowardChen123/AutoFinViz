@@ -196,9 +196,13 @@ if __name__ == "__main__":
 
     summarizer = Summarizer()
 
-    df = pd.read_csv("example/data/Stock_price_TSLA.csv")
-    df_name = "Stock_price_TSLA"
-    category = "Market Dataset"
+    # df = pd.read_csv("example/data/Stock_price_TSLA.csv")
+    # df_name = "Stock_price_TSLA"
+    # category = "Market Dataset"
+
+    df = pd.read_csv("example/data/Consumer_price_index.csv")
+    df_name = "Consumer_price_index"
+    category = "Economic Dataset"
 
     df = pd.read_csv("example/data/Consumer_price_index.csv")
     df_name = "Consumer_price_index"
