@@ -27,15 +27,14 @@ class Summarizer():
             return None
 
         system_prompt += """
-        You can figure out the TOP3 metrics derived from the dataset.
-        TOP means each data row can calculate a new metric.
-        ONLY return the result in a form of "["name 1", "name 2", "name 3"]"
+            Identify the top 3 metrics that can be derived from a given dataset. The metrics must be calculable from each data row. 
+            Leverage your domain knowledge, the derived metrics should meaningful and convey important message.
+            Respond only with the metric names in the format: ["metric 1", "metric 2", "metric 3"].
         """
 
         message = f"""
-        I have a dataset called {df_name}, with its columns names below
-        {list(col)}
-        What are the TOP3 metrics I can derived from this dataset? (without explaination) 
+            Analyzing the dataset '{df_name}', which includes the following columns: {', '.join(col)}. 
+            What are the top 3 metrics that can be derived from this dataset? Please list them without explanation. 
         """
 
         new_metrics = generateLLMResponse(system_prompt, message)
@@ -51,21 +50,21 @@ class Summarizer():
 
             system_prompt = """
             You are an experienced Market financial analyst that understand all market dataset, including Stock Price market, Commodity Price market and Currecy Exchange Price market.
-            You know all the calculation of financial concpets.
+            You know all the calculation of financial concepts.
             """
 
         elif category == "Economic Dataset":
 
             system_prompt = """
             You are an experienced Economist that understand all economic dataset, including Gross Domestic Product, Unemployment Rate and Consumer Price Index.
-            You know all the calculation of economic concpets.
+            You know all the calculation of economic concepts.
             """
 
         elif category == "Corporate Dataset":
             
             system_prompt = """
             You are an experienced Economist that understand all economic dataset, including Gross Domestic Product, Unemployment Rate and Consumer Price Index.
-            You know all the calculation of economic concpets.
+            You know all the calculation of economic concepts.
             """
 
         else:
@@ -73,23 +72,20 @@ class Summarizer():
 
 
         system_prompt += """
-        i) ONLY return Executable Python code, nothing else
-        ii) NO NEED TO read the dataset into a dataframe
-        iii) DO NOT print out the new values
-        iv) USE "df" to represent the dataframe in the code
+            Provide only executable Python code. The code should:
+            1. Use 'df' to represent the dataframe.
+            2. Not read the dataset into a dataframe.
+            3. Not print out any new values.
+            4. Add new columns as specified.
+            5. Require no further input or interaction.
         """
 
         message = f"""
-        I have a dataset called {df_name}, with its columns names below
-        {list(col)}
-        
-        Can you provide executable Python code to add the following columns
-        {new_metrics}
+            Dataset name: {df_name}
+            Column names: {', '.join(col)}
+            Required new columns: {', '.join(new_metrics)}
 
-        ONLY return Executable Python code, nothing else
-        USE "df" to represent the dataframe in the code
-        Code must not require further input
-        
+            Generate executable Python code to add these new columns to 'df'. The code should follow the above guidelines and not perform any additional actions.
         """
 
         return generateLLMResponse(system_prompt, message)
@@ -171,11 +167,8 @@ if __name__ == "__main__":
 
     summarizer = Summarizer()
 
-    df = pd.read_csv("example/data/Consumer_price_index.csv")
-    df_name = "Consumer_price_index"
-    category = "Economic Dataset"
+    df = pd.read_csv("example/data/Stock_price_TSLA.csv")
+    df_name = "Stock_price_TSLA"
+    category = "Market Dataset"
 
     summarizer.summarize(df, df_name, category)
-
-
-        
