@@ -1,16 +1,13 @@
 import pandas as pd
-from abc import ABC, abstractmethod
-from openai import OpenAI
 import json
-import re
 
-# from ...utils import get_api_key
+from autofinviz.utils import generateLLMResponse
 
 class Summarizer():
     def __init__(self) -> None:
         pass
 
-    def find_new_metrics(self, df: pd.DataFrame, df_name: str, category: str, gpt_client: OpenAI) -> list:
+    def find_new_metrics(self, df: pd.DataFrame, df_name: str, category: str) -> list:
 
         col = df.columns
 
@@ -41,20 +38,12 @@ class Summarizer():
         What are the TOP3 metrics I can derived from this dataset? (without explaination) 
         """
 
-        completion = gpt_client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "assistant", "content": message},
-            ]
-        )
-
-        new_metrics = completion.choices[0].message.content
+        new_metrics = generateLLMResponse(system_prompt, message)
         new_metrics = json.loads(new_metrics)
 
         return new_metrics
 
-    def create_new_col(self, new_metrics: list, df: pd.DataFrame, df_name: str, category: str, gpt_client: OpenAI) -> str:
+    def create_new_col(self, new_metrics: list, df: pd.DataFrame, df_name: str, category: str) -> str:
 
         col = df.columns
 
@@ -103,14 +92,7 @@ class Summarizer():
         
         """
 
-        completion = gpt_client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "assistant", "content": message},
-        ])
-
-        return completion.choices[0].message.content
+        return generateLLMResponse(system_prompt, message)
     
     def update_df(self,  df: pd.DataFrame, code: str):
 
@@ -118,9 +100,6 @@ class Summarizer():
             exec(code)
         except Exception as e:
             print(f"An error occurred: {e}")
-            # self.update_df(df, code)
-
-
 
     def base_summary(self, df: pd.DataFrame, n_samples=3) -> list:
         def get_samples(column):
@@ -165,19 +144,15 @@ class Summarizer():
         self, df: pd.DataFrame,
         df_name: str, 
         category: str,
-        gpt_client: OpenAI
-        # generator: llm,
-        # generation_config: TextGenerationConfig,
     ):
 
-        new_metrics = self.find_new_metrics(df, df_name, category, gpt_client)
+        new_metrics = self.find_new_metrics(df, df_name, category)
 
         print(new_metrics)
 
-        new_col_code = self.create_new_col(new_metrics, df, df_name, category, gpt_client)
+        new_col_code = self.create_new_col(new_metrics, df, df_name, category)
 
         print(new_col_code)
-
 
         self.update_df(df, new_col_code)
 
@@ -196,32 +171,11 @@ if __name__ == "__main__":
 
     summarizer = Summarizer()
 
-    # df = pd.read_csv("example/data/Stock_price_TSLA.csv")
-    # df_name = "Stock_price_TSLA"
-    # category = "Market Dataset"
-
     df = pd.read_csv("example/data/Consumer_price_index.csv")
     df_name = "Consumer_price_index"
     category = "Economic Dataset"
 
-    df = pd.read_csv("example/data/Consumer_price_index.csv")
-    df_name = "Consumer_price_index"
-    category = "Economic Dataset"
-
-    def get_api_key():
-        try:
-            with open("apikey", 'r') as f:
-                return f.read().strip()
-        except FileNotFoundError:
-            print("'%s' file not found" % "apikey")
-
-    api_key = get_api_key()       
-
-    gpt_client = OpenAI(
-        api_key= api_key
-    )
-
-    summarizer.summarize(df, df_name, category, gpt_client)
+    summarizer.summarize(df, df_name, category)
 
 
         
