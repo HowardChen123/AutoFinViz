@@ -49,8 +49,6 @@ def preprocess_code(code: str) -> str:
         matches = re.findall(pattern, code)
         if matches:
             code = matches[0]
-        # code = code.replace("```", "")
-        # return code
 
     if "import" in code:
         # return only text after the first import statement

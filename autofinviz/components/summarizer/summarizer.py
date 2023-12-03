@@ -160,7 +160,7 @@ class Summarizer():
             "fields": base_summary,
         }
 
-        print(summary)
+        return summary, df
 
 
 if __name__ == "__main__":

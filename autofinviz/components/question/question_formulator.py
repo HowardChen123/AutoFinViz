@@ -1,4 +1,5 @@
 from autofinviz.utils import generateLLMResponse
+import json
 
 class QuestionFormulator():
     def __init__(self) -> None:
@@ -18,7 +19,7 @@ class QuestionFormulator():
             THE OUTPUT MUST BE A CODE SNIPPET OF A VALID LIST OF JSON OBJECTS. IT MUST USE THE FOLLOWING FORMAT:
 
             ```[
-                { "index": 0,  "question": "What is the distribution of X", "visualization": "histogram of X", "rationale": "This tells about "} ..
+                { "index": 0,  "question": "How", "visualization": "histogram of X", "rationale": "This tells about "} ..
                 ]
             ```
             THE OUTPUT SHOULD ONLY USE THE JSON FORMAT ABOVE.
@@ -33,7 +34,7 @@ class QuestionFormulator():
 
         message = f"{user_prompt}\n\n {format_instruction} \n\n. The generated {num_goals} goals are: \n "
 
-        return generateLLMResponse(system_prompt, message)
+        return json.loads(generateLLMResponse(system_prompt, message))
 
 
 if __name__ == "__main__":
