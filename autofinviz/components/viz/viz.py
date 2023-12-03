@@ -2,7 +2,7 @@ import pandas as pd
 
 from autofinviz.utils import generateLLMResponse_viz, preprocess_code
 
-class Summarizer():
+class Viz():
     def __init__(self) -> None:
         pass
 
