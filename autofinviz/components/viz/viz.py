@@ -1,12 +1,12 @@
 import pandas as pd
 
-from autofinviz.utils import generateLLMResponse_viz
+from autofinviz.utils import generateLLMResponse_viz, preprocess_code
 
 class Summarizer():
     def __init__(self) -> None:
         pass
 
-    def visualizer(
+    def visualize(
         self, summary: list,
         questions: list,    
     ):
@@ -33,13 +33,13 @@ class Summarizer():
             <imports>
             # solution plan
             # i.  ..
-            def plot(data: pd.DataFrame):
+            def plot(df: pd.DataFrame):
 
                 <stub> # only modify this section
                 plt.title('{question}', wrap=True)
                 return plt;
 
-            chart = plot(data) # data already contains the data to be plotted. Always include this line. No additional code beyond this line."""
+            chart = plot(df) # data already contains the data to be plotted. Always include this line. No additional code beyond this line."""
 
             messages = [
             {"role": "system", "content": system_prompt},
@@ -49,7 +49,14 @@ class Summarizer():
              "content":
              f"Always add a legend with various colors where appropriate. The visualization code MUST only use data fields that exist in the dataset (field_names) or fields that are transformations based on existing field_names). Only use variables that have been defined in the code or are in the dataset summary. You MUST return a FULL PYTHON PROGRAM ENCLOSED IN BACKTICKS ``` that starts with an import statement. DO NOT add any explanation. \n\n THE GENERATED CODE SOLUTION SHOULD BE CREATED BY MODIFYING THE SPECIFIED PARTS OF THE TEMPLATE BELOW \n\n {template} \n\n.The FINAL COMPLETED CODE BASED ON THE TEMPLATE above is ... \n\nBe aware of the following error, i.e. ValueError: Multi-dimensional indexing (e.g. `obj[:, None]`) is no longer supported. Convert to a numpy array before indexing instead."}]
 
-            generateLLMResponse_viz(messages)
+            code = generateLLMResponse_viz(messages)
+
+            code = preprocess_code(code)
+
+            try:
+                exec(code)
+            except Exception as e:
+                print(f"An error occurred: {e}")
 
 
             
