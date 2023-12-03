@@ -21,3 +21,10 @@ def generateLLMResponse(system_prompt, message):
     ])
 
     return completion.choices[0].message.content
+
+def generateLLMResponse_viz(messages):
+    completion = gpt_client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=messages)
+
+    return completion.choices[0].message.content
