@@ -3,6 +3,10 @@ from autofinviz.components.summarizer import Summarizer
 from autofinviz.components.question import QuestionFormulator
 from autofinviz.components.viz import Viz
 
+import time
+
+import pandas as pd
+
 class Pipeline(object):
     def __init__(self):
         """
@@ -26,3 +30,29 @@ class Pipeline(object):
     
     def visualize(self, summary, questions):
         return self.viz.visualize(summary, questions)
+    
+
+if __name__ == "__main__":
+
+    pipline = Pipeline()
+
+    df = pd.read_csv("example/data/Stock_price_TSLA.csv")
+    df_name = "Stock_price_TSLA"
+
+    category = pipline.classify(df)
+    print(category)
+
+    time.sleep(60)
+
+    summary = pipline.summarize(df, df_name, category)
+    print(summary)
+
+    time.sleep(60)
+
+    questions = pipline.formulate_questions(summary, 3)
+    print(questions)
+
+    time.sleep(60)
+
+    pipline.visualize(summary, questions)
+    
