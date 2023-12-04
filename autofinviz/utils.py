@@ -37,12 +37,12 @@ def preprocess_code(code: str) -> str:
     code = code.replace("<stub>", "")
     code = code.replace("<transforms>", "")
 
-    # remove all text after chart = plot(data)
-    if "chart = plot(data)" in code:
-        # print(code)
-        index = code.find("chart = plot(data)")
-        if index != -1:
-            code = code[: index + len("chart = plot(data)")]
+    # remove all text after chart = plot(df)
+    # if "chart = plot(df)" in code:
+    #     # print(code)
+    #     index = code.find("chart = plot(df)")
+    #     if index != -1:
+    #         code = code[: index + len("chart = plot(df)")]
 
     if "```" in code:
         pattern = r"```(?:\w+\n)?([\s\S]+?)```"
@@ -57,6 +57,6 @@ def preprocess_code(code: str) -> str:
             code = code[index:]
 
     code = code.replace("```", "")
-    if "chart = plot(data)" not in code:
-        code = code + "\nchart = plot(data)"
+    if "chart = plot(df)" not in code:
+        code = code + "\nchart = plot(df)"
     return code

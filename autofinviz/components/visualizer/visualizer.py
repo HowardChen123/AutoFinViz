@@ -1,6 +1,8 @@
 import pandas as pd
 
 from autofinviz.utils import generateLLMResponse_viz, preprocess_code
+# import seaborn as sns
+# import matplotlib.pyplot as plt
 
 class Visualizer():
     def __init__(self) -> None:
@@ -9,7 +11,7 @@ class Visualizer():
     def visualize(
         self, summary: list,
         questions: list,
-        df: pd.DataFrame
+        data: pd.DataFrame
     ):
         
         system_prompt = """
@@ -26,40 +28,51 @@ class Visualizer():
         """
 
         for question_dict in questions:
+            df = data.copy()
             visualization = question_dict["visualization"]
             question = question_dict["question"]
 
             general_instructions = f"If the solution requires a single value (e.g. max, min, median, first, last etc), ALWAYS add a line (axvline or axhline) \
                 to the chart, ALWAYS with a legend containing the single value (formatted with 0.2F). \If using a <field> where semantic_type=date, \
                 YOU MUST APPLY the following transform before using that column i) convert date fields to date types \
-                using data[''] = pd.to_datetime(data[<field>], errors='coerce'), ALWAYS use  errors='coerce' ii) \
-                drop the rows with NaT values data = data[pd.notna(data[<field>])] iii) convert field to right time format for plotting. \
+                using df[''] = pd.to_datetime(df[<field>], errors='coerce'), ALWAYS use errors='coerce' ii) \
+                drop the rows with NaT values df = df[pd.notna(df[<field>])] iii) convert field to right time format for plotting. \
                 ALWAYS make sure the x-axis labels are legible (e.g., rotate when needed). Solve the task carefully by completing ONLY \
-                the <imports> AND <stub> section. Given the dataset summary, the plot(data) method should generate a seaborn chart ({visualization}) \
+                the <imports> AND <stub> section. Given the dataset summary, the plot(df) method should generate a seaborn chart ({visualization}) \
                 that addresses this goal: {question}. DO NOT WRITE ANY CODE TO LOAD THE DATA. The data is already loaded and available in the variable data."
-
-            matplotlib_instructions = f" {general_instructions} DO NOT include plt.show(). The plot method must return a matplotlib object (plt). Think step by step. \n"
-
+                
             instructions = {
             "role": "assistant",
-            "content": f"{matplotlib_instructions}. Use BaseMap for charts that require a map. "}
+            "content": f"{general_instructions}"}
 
             template = \
-                f"""
+                """
             import seaborn as sns
             import pandas as pd
             import matplotlib.pyplot as plt
-            <imports>
-            # solution plan
-            # i.  ..
+            # Additional imports can be added here if necessary
+            <additional_imports>
+
+            # Solution Plan:
+            # 1. Describe the first step...
+            # 2. Describe the next step...
+            # ... continue as needed
+
             def plot(df: pd.DataFrame):
+                # The following section is for custom plotting logic.
+                # Modify only within this area.
+                <plotting_stub>
+                
+                # Set the title of the plot. Modify title as needed.
+                plt.title(f'{question}', wrap=True)
+                
+                # Return the plot object
+                return plt
 
-                <stub> # only modify this section
-                plt.title('{question}', wrap=True)
-                return plt;
-
+            # Dataframe 'df' already contains the data to be plotted.
+            # No modifications needed below this line.
             chart = plot(df)
-            # data already contains the data to be plotted. Always include this line. No additional code beyond this line.
+            chart.savefig(f'example/figures/{question}.png')
             """
 
             messages = [
@@ -71,9 +84,8 @@ class Visualizer():
              f"Always add a legend with various colors where appropriate. The visualization code MUST only use data fields that exist in the dataset \
                 (field_names) or fields that are transformations based on existing field_names). Only use variables that have been defined in the code \
                 or are in the dataset summary. You MUST return a FULL PYTHON PROGRAM ENCLOSED IN BACKTICKS ``` that starts with an import statement. \
-                DO NOT add any explanation. \n\n THE GENERATED CODE SOLUTION SHOULD BE CREATED BY MODIFYING THE SPECIFIED PARTS OF THE TEMPLATE BELOW \n\n \
-                {template} \n\n. The FINAL COMPLETED CODE BASED ON THE TEMPLATE above is ... \n\nBe aware of the following error, i.e. \
-                ValueError: Multi-dimensional indexing (e.g. `obj[:, None]`) is no longer supported. Convert to a numpy array before indexing instead."}]
+                DO NOT add any explanation. \n\n THE GENERATED CODE SOLUTION SHOULD BE CREATED BY MODIFYING THE SPECIFIED PARTS OF THE TEMPLATE BELOW: \n\n \
+                {template} \n\n. The FINAL COMPLETED CODE BASED ON THE TEMPLATE above is ..."}]
 
             code = generateLLMResponse_viz(messages)
 
@@ -82,7 +94,7 @@ class Visualizer():
             print(code)
 
             try:
-                exec(code)
+                exec(code, globals(), {'df': df})
             except Exception as e:
                 print(f"An error occurred: {e}")
 
