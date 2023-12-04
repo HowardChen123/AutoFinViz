@@ -1,6 +1,6 @@
 import pandas as pd
 
-from autofinviz.utils import generateLLMResponse_viz, preprocess_code
+from autofinviz.utils import generateLLMResponse_viz, preprocess_code, get_globals_dict
 # import seaborn as sns
 # import matplotlib.pyplot as plt
 
@@ -94,7 +94,8 @@ class Visualizer():
             print(code)
 
             try:
-                exec(code, globals(), {'df': df})
+                ex_locals = get_globals_dict(code, df)
+                exec(code, ex_locals)
             except Exception as e:
                 print(f"An error occurred: {e}")
 

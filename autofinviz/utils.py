@@ -1,5 +1,9 @@
 from openai import OpenAI
 import re
+import ast
+import importlib
+import matplotlib.pyplot as plt
+import pandas as pd
 
 def get_api_key():
     try:
@@ -60,3 +64,33 @@ def preprocess_code(code: str) -> str:
     if "chart = plot(df)" not in code:
         code = code + "\nchart = plot(df)"
     return code
+
+def get_globals_dict(code_string, df):
+    # Parse the code string into an AST
+    tree = ast.parse(code_string)
+    # Extract the names of the imported modules and their aliases
+    imported_modules = []
+    for node in tree.body:
+        if isinstance(node, ast.Import):
+            for alias in node.names:
+                module = importlib.import_module(alias.name)
+                imported_modules.append((alias.name, alias.asname, module))
+        elif isinstance(node, ast.ImportFrom):
+            module = importlib.import_module(node.module)
+            for alias in node.names:
+                obj = getattr(module, alias.name)
+                imported_modules.append(
+                    (f"{node.module}.{alias.name}", alias.asname, obj)
+                )
+
+    # Import the required modules into a dictionary
+    globals_dict = {}
+    for module_name, alias, obj in imported_modules:
+        if alias:
+            globals_dict[alias] = obj
+        else:
+            globals_dict[module_name.split(".")[-1]] = obj
+
+    ex_dicts = {"pd": pd, "df": df, "plt": plt}
+    globals_dict.update(ex_dicts)
+    return globals_dict
