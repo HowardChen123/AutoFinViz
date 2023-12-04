@@ -42,7 +42,7 @@ if __name__ == "__main__":
     category = pipline.classify(df)
     print(category)
 
-    time.sleep(60)
+    time.sleep(10)
 
     summary, df = pipline.summarize(df, df_name, category)
     print(summary)

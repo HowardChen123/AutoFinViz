@@ -18,9 +18,11 @@ class QuestionFormulator():
         format_instruction = """
             THE OUTPUT MUST BE A CODE SNIPPET OF A VALID LIST OF JSON OBJECTS. IT MUST USE THE FOLLOWING FORMAT:
 
-            ```[
-                { "index": 0,  "question": "How", "visualization": "histogram of X", "rationale": "This tells about "} ..
-                ]
+            ```
+            [
+                { "index": 0,  "question": "How", "visualization": "histogram of X", "rationale": "This tells about "},
+                { "index": 1,  "question": "How", "visualization": "lineplot of X", "rationale": "This tells about "}, ..
+            ]
             ```
             THE OUTPUT SHOULD ONLY USE THE JSON FORMAT ABOVE.
         """
