@@ -4,6 +4,7 @@ import ast
 import importlib
 import matplotlib.pyplot as plt
 import pandas as pd
+import json
 
 def get_api_key():
     try:
@@ -94,3 +95,26 @@ def get_globals_dict(code_string, df):
     ex_dicts = {"pd": pd, "df": df, "plt": plt}
     globals_dict.update(ex_dicts)
     return globals_dict
+
+# Function to convert JSON to a readable string format
+def json_to_readable(data, indent=0):
+    readable_str = ""
+    indent_str = "  " * indent
+
+    if isinstance(data, dict):
+        for key, value in data.items():
+            readable_str += f"{indent_str}{key}: "
+            if isinstance(value, (dict, list)):
+                readable_str += "\n" + json_to_readable(value, indent + 1)
+            else:
+                readable_str += f"{value}\n"
+    elif isinstance(data, list):
+        for item in data:
+            if isinstance(item, (dict, list)):
+                readable_str += json_to_readable(item, indent + 1) + "\n"
+            else:
+                readable_str += f"{indent_str}- {item}\n"
+    else:
+        readable_str += f"{indent_str}{data}\n"
+
+    return readable_str
