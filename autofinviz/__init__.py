@@ -1,1 +1,1 @@
-from .components.summarizer import Summarizer
+from .components.pipeline import Pipeline
