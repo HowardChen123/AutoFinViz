@@ -4,7 +4,6 @@ import ast
 import importlib
 import matplotlib.pyplot as plt
 import pandas as pd
-import json
 
 def get_api_key():
     try:

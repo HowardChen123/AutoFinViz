@@ -1,4 +1,4 @@
-apikey
+.env
 .ipynb_checkpoints/
 bin
 include
