@@ -7,14 +7,11 @@ class Classifier():
 
     def __init__(self) -> None:
         self.model = ChatOpenAI(model_name="gpt-3.5-turbo")
-        self.prompt_template = ChatPromptTemplate.from_template("""
-            You are an experienced financial analyst. Classify datasets into one of the following categories: \
-                'Market Dataset', 'Economic Dataset', or 'Corporate Financial Dataset'. 
-            Your response must be exactly one of these three options.
+        
+        with open('autofinviz/prompts/classifier_prompt.tmpl', 'r') as file:
+            prompt_template_content = file.read()
 
-            {message}
-            """
-        )
+        self.prompt_template = ChatPromptTemplate.from_template(prompt_template_content)
         self.output_parser = StrOutputParser()
 
     def validate_output(self, text):
