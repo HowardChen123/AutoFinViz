@@ -5,47 +5,39 @@ from autofinviz.utils import generateLLMResponse
 
 class Summarizer():
     def __init__(self) -> None:
-        self.base_system_prompt = None
+        return
+
+    def find_new_metrics_prompt(self, category):
+
+        prompt_files = {
+            "Market Dataset": 'autofinviz/prompts/market_summarizer.tmpl',
+            "Economic Dataset": 'autofinviz/prompts/economic_summarizer.tmpl',
+            "Corporate Dataset": 'autofinviz/prompts/corporate_summarizer.tmpl'
+        }
+
+        file_path = prompt_files.get(category)
+        if not file_path:
+            return None
+
+        # Read the base system prompt from the file
+        with open(file_path, 'r') as file:
+            base_system_prompt = file.read()
+
+        # Formulate the complete system prompt
+        system_prompt = f"""
+            {base_system_prompt}
+
+            Identify the top 3 metrics that can be derived from a given dataset. The metrics must be calculable from each data row. 
+            Leverage your domain knowledge, the derived metrics should meaningful and convey important message.
+            Respond only with the metric names in the format: ["metric 1", "metric 2", "metric 3"].
+        """
+        return system_prompt
 
     def find_new_metrics(self, df: pd.DataFrame, df_name: str, category: str) -> list:
 
         col = df.columns
 
-        if category == "Market Dataset":
-
-            self.base_system_prompt = "You are a highly skilled Financial Analyst specializing in market datasets. \
-                Your expertise encompasses the full spectrum of the financial market, including but not \
-                limited to Stock Price Markets, Commodity Price Markets, and Currency Exchange Price Markets. \
-                You are proficient in various financial calculations and analysis techniques, enabling you to \
-                interpret and leverage market data effectively.\n\n"
-        
-        elif category == "Economic Dataset":
-
-            self.base_system_prompt = "As a seasoned Economist, you possess a deep understanding of various economic \
-                datasets. Your expertise extends to critical economic indicators such as Gross Domestic \
-                Product (GDP), Unemployment Rates, and the Consumer Price Index (CPI). With a strong \
-                foundation in economic theory and quantitative methods, you are adept at performing \
-                sophisticated economic analyses. This includes calculating economic growth rates, \
-                analyzing employment trends, and interpreting inflation data, providing insights \
-                into the health and direction of the economy.\n\n"
-
-        elif category == "Corporate Dataset":
-
-            self.base_system_prompt = "You are an experienced Business Analyst with extensive knowledge of corporate \
-                datasets. Your area of expertise includes, but is not limited to, financial statements, \
-                market share data, and operational metrics of corporations. You are well-versed in analyzing \
-                balance sheets, income statements, cash flow statements, and other corporate financial \
-                documents. Your skillset enables you to assess a company's financial health, identify \
-                trends in business performance, and provide strategic recommendations based on data-driven insights.\n\n"
-            
-        else:
-            return None
-
-        system_prompt = self.base_system_prompt + """
-            Identify the top 3 metrics that can be derived from a given dataset. The metrics must be calculable from each data row. 
-            Leverage your domain knowledge, the derived metrics should meaningful and convey important message.
-            Respond only with the metric names in the format: ["metric 1", "metric 2", "metric 3"].
-        """
+        system_prompt = self.find_new_metrics_prompt(category)
 
         message = f"""
             Analyzing the dataset '{df_name}', which includes the following columns: {', '.join(col)}. 

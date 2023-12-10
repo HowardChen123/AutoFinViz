@@ -8,10 +8,10 @@ class Classifier():
     def __init__(self) -> None:
         self.model = ChatOpenAI(model_name="gpt-3.5-turbo")
         
-        with open('autofinviz/prompts/classifier_prompt.tmpl', 'r') as file:
+        with open('autofinviz/prompts/classifier.tmpl', 'r') as file:
             prompt_template_content = file.read()
 
-        self.prompt_template = ChatPromptTemplate.from_template(prompt_template_content)
+        self.prompt_template = ChatPromptTemplate.from_messages([("system", prompt_template_content), ("human", "{input}")])
         self.output_parser = StrOutputParser()
 
     def validate_output(self, text):
@@ -24,11 +24,11 @@ class Classifier():
     def classify(self, df: pd.DataFrame):
         col = df.columns
 
-        message = f"""
+        input = f"""
         Here are the column names of a dataset: {list(col)}. Based on these names, classify the dataset into one of the specified categories.
         """
         chain = self.prompt_template | self.model | self.output_parser
-        return self.validate_output(chain.invoke({"message": message}))
+        return self.validate_output(chain.invoke({"input": input}))
 
 
 if __name__ == "__main__":
