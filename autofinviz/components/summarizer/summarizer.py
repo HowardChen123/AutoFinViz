@@ -1,18 +1,23 @@
-import pandas as pd
 import json
-
-from autofinviz.utils import generateLLMResponse
+import pandas as pd
+from langchain.chat_models import ChatOpenAI
+from langchain.prompts import ChatPromptTemplate
+from langchain.output_parsers import CommaSeparatedListOutputParser
+from langchain.schema.output_parser import StrOutputParser
+from langchain.output_parsers.json import SimpleJsonOutputParser
+from langchain.prompts import PromptTemplate
+import config
 
 class Summarizer():
-    def __init__(self) -> None:
-        return
+    def __init__(self, model="gpt-3.5-turbo") -> None:
+        self.model = ChatOpenAI(model_name=model)
 
     def find_new_metrics_prompt(self, category):
 
         prompt_files = {
-            "Market Dataset": 'autofinviz/prompts/market_summarizer.tmpl',
-            "Economic Dataset": 'autofinviz/prompts/economic_summarizer.tmpl',
-            "Corporate Dataset": 'autofinviz/prompts/corporate_summarizer.tmpl'
+            "Market Dataset": 'autofinviz/components/summarizer/prompts/market_summarizer.tmpl',
+            "Economic Dataset": 'autofinviz/components/summarizer/prompts/economic_summarizer.tmpl',
+            "Corporate Dataset": 'autofinviz/components/summarizer/prompts/corporate_summarizer.tmpl'
         }
 
         file_path = prompt_files.get(category)
@@ -23,35 +28,35 @@ class Summarizer():
         with open(file_path, 'r') as file:
             base_system_prompt = file.read()
 
-        # Formulate the complete system prompt
-        system_prompt = f"""
-            {base_system_prompt}
-
-            Identify the top 3 metrics that can be derived from a given dataset. The metrics must be calculable from each data row. 
-            Leverage your domain knowledge, the derived metrics should meaningful and convey important message.
-            Respond only with the metric names in the format: ["metric 1", "metric 2", "metric 3"].
-        """
-        return system_prompt
+        return base_system_prompt
 
     def find_new_metrics(self, df: pd.DataFrame, df_name: str, category: str) -> list:
 
-        col = df.columns
+        self.base_system_prompt = self.find_new_metrics_prompt(category)
+        
+        output_parser = CommaSeparatedListOutputParser()
+        format_instructions = output_parser.get_format_instructions()
 
-        system_prompt = self.find_new_metrics_prompt(category)
-
-        message = f"""
-            Analyzing the dataset '{df_name}', which includes the following columns: {', '.join(col)}. 
+        # Formulate the complete system prompt
+        prompt = f"""
+            {self.base_system_prompt}
+         
+            Identify the top 3 metrics that can be derived from a given dataset. The metrics must be calculable from each data row. 
+            Leverage your domain knowledge, the derived metrics should meaningful and convey important message.
+            
+            Analyzing the dataset '{df_name}', which includes the following columns: {df.columns}. 
             What are the top 3 metrics that can be derived from this dataset? Please list them without explanation. 
+
+            Respond only with the metric names in the format: ["metric 1", "metric 2", "metric 3"].
         """
 
-        new_metrics = generateLLMResponse(system_prompt, message)
-        new_metrics = json.loads(new_metrics)
+        prompt_template = ChatPromptTemplate.from_template(prompt)
 
-        return new_metrics
+        chain = prompt_template | self.model
 
-    def create_new_col(self, new_metrics: list, df: pd.DataFrame, df_name: str, category: str) -> str:
+        return json.loads(chain.invoke({}).content)
 
-        col = df.columns
+    def create_new_col(self, new_metrics: list, df: pd.DataFrame, df_name: str) -> pd.DataFrame:
 
         system_prompt = self.base_system_prompt + """
             Provide only executable Python code. The code should:
@@ -64,21 +69,35 @@ class Summarizer():
 
         message = f"""
             Dataset name: {df_name}
-            Column names: {', '.join(col)}
+            Column names: {', '.join(df.columns)}
             Required new columns: {', '.join(new_metrics)}
 
-            Generate executable Python code to add these new columns to 'df'. The code should follow the above guidelines \
+            Generate executable Python code to add these required new columns to 'df'. The code should follow the above guidelines \
             and not perform any additional actions.
+
+            Return only python code in Markdown format, e.g.:
+
+            ```python
+            ....
+            ```
         """
 
-        return generateLLMResponse(system_prompt, message)
-    
-    def update_df(self,  df: pd.DataFrame, code: str):
+        prompt = ChatPromptTemplate.from_messages([("system", system_prompt), ("human", message)])
+
+        def _sanitize_output(text: str):
+            _, after = text.split("```python")
+            code = after.split("```")[0]
+            return(code)
+
+        chain = prompt | self.model | StrOutputParser() | _sanitize_output
+        code = chain.invoke({})
 
         try:
             exec(code)
         except Exception as e:
             print(f"An error occurred: {e}")
+
+        return df
 
     def base_summary(self, df: pd.DataFrame, n_samples=3) -> list:
         def get_samples(column):
@@ -118,7 +137,7 @@ class Summarizer():
 
         return properties_list
 
-    def add_descriptions(self, summary):
+    def add_descriptions(self, summary: dict) -> dict:
         system_prompt = """
             You are an experienced data analyst that can annotate datasets. Your instructions are as follows:
             i) Dataset Description: Provide a brief yet informative description of the dataset.
@@ -127,13 +146,15 @@ class Summarizer():
                 Use single-word identifiers like 'company', 'city', 'number', 'supplier', 'location', 'gender', \
                 'longitude', 'latitude', 'url', 'ip address', 'zip code', 'email', etc.
             Your output should be a neatly updated JSON dictionary without any preamble or explanation.
-        """
-        message = f"""
+        
             Annotate the dictionary below. Only return a JSON object.
-            {summary}
+            
+            {{summary}}
         """
-        enriched_summary = generateLLMResponse(system_prompt, message)
-        return json.loads(enriched_summary)
+
+        prompt = PromptTemplate.from_template(system_prompt, template_format="jinja2")
+        chain = prompt | self.model | SimpleJsonOutputParser()
+        return chain.invoke({"summary": summary})
 
     def summarize(
         self, df: pd.DataFrame,
@@ -145,13 +166,7 @@ class Summarizer():
 
         print(new_metrics)
 
-        new_col_code = self.create_new_col(new_metrics, df, df_name, category)
-
-        print(new_col_code)
-
-        self.update_df(df, new_col_code)
-
-        print(df)
+        df = self.create_new_col(new_metrics, df, df_name)
         
         base_summary = self.base_summary(df)
         summary = {
@@ -159,6 +174,7 @@ class Summarizer():
             "fields": base_summary,
         }
         summary = self.add_descriptions(summary)
+        print(summary)
         return summary, df
 
 

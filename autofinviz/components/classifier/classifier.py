@@ -5,10 +5,10 @@ from langchain.schema.output_parser import StrOutputParser
 
 class Classifier():
 
-    def __init__(self) -> None:
-        self.model = ChatOpenAI(model_name="gpt-3.5-turbo")
+    def __init__(self, model="gpt-3.5-turbo") -> None:
+        self.model = ChatOpenAI(model_name=model)
         
-        with open('autofinviz/prompts/classifier.tmpl', 'r') as file:
+        with open('autofinviz/components/classifier/prompts/classifier.tmpl', 'r') as file:
             prompt_template_content = file.read()
 
         self.prompt_template = ChatPromptTemplate.from_messages([("system", prompt_template_content), ("human", "{input}")])
