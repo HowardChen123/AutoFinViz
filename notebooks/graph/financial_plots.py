@@ -133,7 +133,7 @@ from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 def plot_moving_averages(df: pd.DataFrame, date_col: str, close_col: str):
     """
-    Plots Exponential Moving Averages (EMA) and Simple Moving Averages (SMA) along with the closing price using Plotly.
+    Plots Moving Average Graph along with the closing price using Plotly, i.e. Exponential Moving Averages (EMA) and Simple Moving Averages (SMA)
 
     Parameters:
     df (pd.DataFrame): DataFrame containing the data for the plot. Must include 'Date' and 'Close' columns.
