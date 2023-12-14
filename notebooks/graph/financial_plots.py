@@ -237,6 +237,7 @@ def plot_rsi(df: pd.DataFrame, date_col: str, close_col: str, n: int = 14):
     fig = go.Figure(go.Scatter(x=df[date_col], y=rsi, name='RSI'))
     fig.show()
 
+
 def plot_macd(df: pd.DataFrame, date_col: str, close_col: str):
     """
     Calculates and plots the Moving Average Convergence Divergence (MACD) and its signal line along with the closing price.
@@ -273,4 +274,78 @@ def plot_macd(df: pd.DataFrame, date_col: str, close_col: str):
     fig.add_trace(go.Scatter(x=df[date_col], y=EMA_26, name='EMA 26'), row=1, col=1)
     fig.add_trace(go.Scatter(x=df[date_col], y=df['MACD'], name='MACD'), row=2, col=1)
     fig.add_trace(go.Scatter(x=df[date_col], y=df['MACD_signal'], name='Signal line'), row=2, col=1)
+    fig.show()
+
+
+def plot_waterfall(x_labels: list, y_values: list, text_labels: list, title: str = "Profit and Loss"):
+    """
+    Creates and displays a waterfall chart using Plotly, typically used for financial analysis to show changes in metrics.
+
+    Parameters:
+    x_labels (list): A list of strings representing the categories or stages in the waterfall chart.
+    y_values (list): A list of numerical values corresponding to each category or stage. Positive values represent increases, and negative values represent decreases.
+    text_labels (list): A list of strings for annotations on each bar. Should correspond to the values in `y_values`.
+    title (str, optional): Title of the plot. Default is "Profit and Loss".
+
+    Returns:
+    None: Directly displays the waterfall chart using Plotly.
+
+    """
+
+    # Constructing the measure list
+    measure = ['relative'] * (len(x_labels) - 1) + ['total']
+
+    # Create and display the waterfall chart
+    fig = go.Figure(go.Waterfall(
+        name = "20", orientation = "v",
+        measure = measure,
+        x = x_labels,
+        textposition = "outside",
+        text = text_labels,
+        y = y_values,
+        connector = {"line":{"color":"rgb(63, 63, 63)"}},
+    ))
+
+    fig.update_layout(title = title, showlegend = True)
+
+    fig.show()
+
+
+def plot_funnel_chart(data: pd.DataFrame, x_col: str, y_col: str, title: str = "Funnel Chart"):
+    """
+    Creates and displays a funnel chart using Plotly Express, ideal for representing stages in a process or pipeline.
+
+    Parameters:
+    data (pd.DataFrame): A dictionary with keys representing column names and values as lists of data points. 
+                 It should contain data for both 'x' and 'y' axes of the funnel chart.
+    x_col (str): The column from data to be used as values (quantitative axis) of the funnel.
+    y_col (str): The column from data to be used as stages (qualitative axis) of the funnel.
+    title (str, optional): Title of the plot. Default is "Funnel Chart".
+
+    Returns:
+    None: Directly displays the funnel chart using Plotly Express.
+    """
+
+    # Create and display the funnel chart
+    fig = px.funnel(data, x=x_col, y=y_col)
+    fig.update_layout(title=title)
+    fig.show()
+
+
+def plot_pie_chart(labels: list, values: list, title: str = "Pie Chart"):
+    """
+    Creates and displays a pie chart using Plotly, suitable for showing the composition of a dataset.
+
+    Parameters:
+    labels (list): A list of labels for each segment of the pie chart.
+    values (list): A list of values corresponding to each label. These values determine the size of each pie segment.
+    title (str, optional): Title of the pie chart. Default is "Pie Chart".
+
+    Returns:
+    None: Directly displays the pie chart using Plotly.
+    """
+
+    # Create and display the pie chart
+    fig = go.Figure(data=[go.Pie(labels=labels, values=values, textinfo='label+percent', insidetextorientation='radial')])
+    fig.update_layout(title=title)
     fig.show()
