@@ -4,18 +4,22 @@ import pandas as pd
 
 st.title('AutoFinViz')
 
-openai_api_key = st.sidebar.text_input('OpenAI API Key', type='password')
+# OpenAI API Key Input
+openai_api_key = st.text_input('Enter your OpenAI API key', type='password')
 
-submit_key = st.button('Submit')
+# Save the API key in the config file if it's entered
+if openai_api_key:
+    openai.api_key = openai_api_key
+    st.success('API Key saved!')
 
-if submit_key:
+# File Uploader
+uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
 
-    if not openai_api_key.startswith('sk-'):
-        st.warning('Please enter your OpenAI API key!', icon='⚠')
-
-    if openai_api_key:
-        openai.api_key = openai_api_key
-        st.success('API Key saved!')
+# If a file is uploaded, read it into a DataFrame
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+    # Display the DataFrame
+    st.write(df)
 
 # File Uploader
 # uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
