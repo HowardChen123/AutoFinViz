@@ -7,30 +7,6 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 
 
-def timeseries(df: pd.DataFrame, date: str, measurement: str, title: str = "Time Series Plot", line_color: str = 'blue'):
-    """
-    Plots a time series graph using Plotly based on specified date and measurement columns in a DataFrame.
-
-    Parameters:
-    df (pd.DataFrame): DataFrame containing the data for the plot.
-    date (str): Column name in `df` representing the date axis.
-    measurement (str): Column name in `df` representing the measurement axis.
-    title (str, optional): Title of the plot. Default is 'Time Series Plot'.
-    line_color (str, optional): Color of the line in the plot. Default is 'blue'.
-
-    Returns:
-    None: Displays the plot directly using Plotly.
-    """
-
-    # Ensure the date column is in datetime format
-    if not is_datetime(df[date]):
-        df[date] = pd.to_datetime(df[date], infer_datetime_format=True, errors='coerce')
-
-    # Create the figure
-    fig = go.Figure([go.Scatter(x=df[date], y=df[measurement], line=dict(color=line_color))])
-    fig.update_layout(title=title, xaxis_title=date, yaxis_title=measurement)
-    fig.show()
-
 
 def timeseries_slider_selector(df: pd.DataFrame, date: str, measurement: str, 
                                 title: str = "Time Series Plot"):
@@ -66,8 +42,9 @@ def timeseries_slider_selector(df: pd.DataFrame, date: str, measurement: str,
             ])
         )
     )
-    fig.show()
+    return fig
 
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 def multi_timeseries(df: pd.DataFrame, date: str, measurements: List[str], 
                                 title: str = "Time Series Plot"):
@@ -97,9 +74,9 @@ def multi_timeseries(df: pd.DataFrame, date: str, measurements: List[str],
     # Update x-axis formatting
     fig.update_xaxes(dtick="M1", tickformat="%b\n%Y")
 
-    # Display the figure
-    fig.show()
+    return fig
 
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 def ohlc_chart(df: pd.DataFrame, date: str, open: str, high: str, low: str, close: str, volume: str):
     """
@@ -112,7 +89,6 @@ def ohlc_chart(df: pd.DataFrame, date: str, open: str, high: str, low: str, clos
     high (str): Column name in `df` representing the highest prices.
     low (str): Column name in `df` representing the lowest prices.
     close (str): Column name in `df` representing the closing prices.
-    volume (str): Column name in `df` representing the trading volume
 
     Returns:
     None: Directly displays the OHLC chart using Plotly.
@@ -122,16 +98,12 @@ def ohlc_chart(df: pd.DataFrame, date: str, open: str, high: str, low: str, clos
     if not is_datetime(df[date]):
         df[date] = pd.to_datetime(df[date], infer_datetime_format=True, errors='coerce')
 
-    fig = make_subplots(rows=2, cols=1)
-
     #OHLC Plot
-    fig.add_trace(go.Ohlc(x=df[date], open=df[open], high=df[high], low=df[low], close=df[close], name='Price'), row=1, col=1)
-    #Volume PLot
-    fig.add_trace(go.Scatter(x=df[date], y=df[volume], name='Volume'), row=2, col=1)
+    fig = go.Figure(go.Ohlc(x=df[date], open=df[open], high=df[high], low=df[low], close=df[close], name='Price'), row=1, col=1)
+    
+    return fig
 
-    fig.update(layout_xaxis_rangeslider_visible=False)
-    fig.show()
-
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 def candlestick_chart(df: pd.DataFrame, date: str, open: str, high: str, low: str, close: str):
     """
@@ -155,8 +127,9 @@ def candlestick_chart(df: pd.DataFrame, date: str, open: str, high: str, low: st
 
     # Create and display the candlestick chart
     fig = go.Figure(data=[go.Candlestick(x=df[date], open=df[open], high=df[high], low=df[low], close=df[close])])
-    fig.show()
+    return fig
 
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 def plot_moving_averages(df: pd.DataFrame, date_col: str, close_col: str):
     """
@@ -197,8 +170,9 @@ def plot_moving_averages(df: pd.DataFrame, date_col: str, close_col: str):
     fig.add_trace(go.Scatter(x=df[date_col], y=df['SMA_30'], name='SMA 30'))
     fig.add_trace(go.Scatter(x=df[date_col], y=df[close_col], name='Close', opacity=0.3))
     
-    fig.show()
+    return fig
 
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 def plot_rsi(df: pd.DataFrame, date_col: str, close_col: str, n: int = 14):
     """
@@ -232,8 +206,9 @@ def plot_rsi(df: pd.DataFrame, date_col: str, close_col: str, n: int = 14):
 
     # Create and display the RSI plot
     fig = go.Figure(go.Scatter(x=df[date_col], y=rsi, name='RSI'))
-    fig.show()
+    return fig
 
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 def plot_macd(df: pd.DataFrame, date_col: str, close_col: str):
     """
@@ -271,8 +246,7 @@ def plot_macd(df: pd.DataFrame, date_col: str, close_col: str):
     fig.add_trace(go.Scatter(x=df[date_col], y=EMA_26, name='EMA 26'), row=1, col=1)
     fig.add_trace(go.Scatter(x=df[date_col], y=df['MACD'], name='MACD'), row=2, col=1)
     fig.add_trace(go.Scatter(x=df[date_col], y=df['MACD_signal'], name='Signal line'), row=2, col=1)
-    fig.show()
-
+    return fig
 
 def plot_waterfall(x_labels: list, y_values: list, text_labels: list, title: str = "Profit and Loss"):
     """
@@ -305,7 +279,7 @@ def plot_waterfall(x_labels: list, y_values: list, text_labels: list, title: str
 
     fig.update_layout(title = title, showlegend = True)
 
-    fig.show()
+    return fig
 
 
 def plot_funnel_chart(data: pd.DataFrame, x_col: str, y_col: str, title: str = "Funnel Chart"):
@@ -326,7 +300,7 @@ def plot_funnel_chart(data: pd.DataFrame, x_col: str, y_col: str, title: str = "
     # Create and display the funnel chart
     fig = px.funnel(data, x=x_col, y=y_col)
     fig.update_layout(title=title)
-    fig.show()
+    return fig
 
 
 def plot_pie_chart(labels: list, values: list, title: str = "Pie Chart"):
@@ -345,4 +319,4 @@ def plot_pie_chart(labels: list, values: list, title: str = "Pie Chart"):
     # Create and display the pie chart
     fig = go.Figure(data=[go.Pie(labels=labels, values=values, textinfo='label+percent', insidetextorientation='radial')])
     fig.update_layout(title=title)
-    fig.show()
+    return fig
