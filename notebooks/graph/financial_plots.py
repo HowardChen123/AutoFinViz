@@ -1,13 +1,10 @@
 import pandas as pd
 from typing import List
-import plotly as py
-import plotly.io as pio
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from pandas.api.types import is_datetime64_any_dtype as is_datetime
 import plotly.express as px
 from plotly.subplots import make_subplots
-from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 
 
 def timeseries(df: pd.DataFrame, date: str, measurement: str, title: str = "Time Series Plot", line_color: str = 'blue'):
