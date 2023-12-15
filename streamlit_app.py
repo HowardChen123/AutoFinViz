@@ -20,7 +20,7 @@ if not st.session_state.key_submitted:
         submit_key = st.form_submit_button('Submit API Key')
 
     if submit_key and openai_api_key:
-        openai.api_key = openai_api_key
+        os.environ["OPENAI_API_KEY"] = openai_api_key
         st.session_state.key_submitted = True
         st.success('API Key saved!')
 
