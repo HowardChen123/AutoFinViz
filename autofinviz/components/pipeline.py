@@ -1,6 +1,6 @@
 from autofinviz.components.classifier import Classifier
 from autofinviz.components.summarizer import Summarizer
-from autofinviz.components.question import QuestionFormulator
+# from autofinviz.components.question import QuestionFormulator
 from autofinviz.components.visualizer import Visualizer
 
 import time
@@ -14,7 +14,7 @@ class Pipeline(object):
         """
         self.classifier = Classifier()
         self.summarizer = Summarizer()
-        self.question_formulator = QuestionFormulator()
+        # self.question_formulator = QuestionFormulator()
         self.visualizer = Visualizer()
         
         self.data = None
@@ -49,8 +49,8 @@ if __name__ == "__main__":
 
     time.sleep(60)
 
-    questions = pipline.formulate_questions(summary, 3)
-    print(questions)
+    # questions = pipline.formulate_questions(summary, 3)
+    # print(questions)
 
     time.sleep(60)
 
