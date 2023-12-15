@@ -31,12 +31,14 @@ if st.session_state.key_submitted and not st.session_state.file_uploaded:
     if uploaded_file is not None:
         df = pd.read_csv(uploaded_file)
         st.session_state.file_uploaded = True
-        # Display the DataFrame
-        st.write(df)
         # Extract df_name from the file path
         df_name = os.path.splitext(os.path.basename(uploaded_file.name))[0]
 
 if st.session_state.key_submitted and st.session_state.file_uploaded:
+
+    # Display the DataFrame
+    st.write(df)
+
     pipeline = Pipeline()
 
     # Run summarize method and get the summary
