@@ -34,9 +34,6 @@ class Summarizer():
 
         self.base_system_prompt = self.find_new_metrics_prompt(category)
         
-        output_parser = CommaSeparatedListOutputParser()
-        format_instructions = output_parser.get_format_instructions()
-
         # Formulate the complete system prompt
         prompt = f"""
             {self.base_system_prompt}

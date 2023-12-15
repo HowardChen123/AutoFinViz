@@ -1,6 +1,8 @@
 import streamlit as st
 import openai
 import pandas as pd
+from autofinviz.components.pipeline import Pipeline
+import os
 
 st.title('AutoFinViz')
 
@@ -31,7 +33,17 @@ if st.session_state.key_submitted and not st.session_state.file_uploaded:
         st.session_state.file_uploaded = True
         # Display the DataFrame
         st.write(df)
+        # Extract df_name from the file path
+        df_name = os.path.splitext(os.path.basename(uploaded_file.name))[0]
 
-# Remove everything after actions are complete
 if st.session_state.key_submitted and st.session_state.file_uploaded:
-    st.empty()
+    pipeline = Pipeline()
+
+    # Run summarize method and get the summary
+    summary, df = pipeline.summarize(df, df_name=df_name, category="Market Data")
+
+    # Display the returned summary in a form
+    with st.form("summary_form"):
+        st.write("Summary:")
+        st.write(summary)
+        st.form_submit_button('Confirm Summary')
