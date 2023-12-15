@@ -74,7 +74,7 @@ class Visualizer():
         data: pd.DataFrame
     ):
         
-        figures = []
+        visualizer_results = []
         
         for viz in questions:
 
@@ -127,7 +127,7 @@ class Visualizer():
 
                     fig = exec_vars.get('fig')
                     if fig != None:
-                        figures.append(fig)
+                        visualizer_results.append({"fig": fig, "code": code})
                         break
                     else:
                         print("Function was not executed")
@@ -135,7 +135,7 @@ class Visualizer():
                     print(f"An error occurred: {e}")
                     count += 1
         
-        return figures
+        return visualizer_results
         # system_prompt = """
         #     You are a helpful assistant highly skilled in writing PERFECT code for visualizations. Given some code template, \
         #     you complete the template to generate a visualization given the dataset and the goal described. The code you write \

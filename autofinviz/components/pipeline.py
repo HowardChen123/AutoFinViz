@@ -48,6 +48,8 @@ if __name__ == "__main__":
     questions = pipline.formulate_questions(summary, 3)
     print(questions)
 
+    visualizer_results = pipline.visualize(questions, df)
 
-    figures = pipline.visualize(questions, df)
+    print("Reuslt")
+    print(visualizer_results)
     
