@@ -28,8 +28,8 @@ class Pipeline(object):
     def formulate_questions(self, summary, num_goals):
         return self.question_formulator.formulate_question(summary, num_goals)
     
-    def visualize(self, summary, questions, df):
-        return self.visualizer.visualize(summary, questions, df)
+    def visualize(self, questions, df):
+        return self.visualizer.visualize(questions, df)
     
 
 if __name__ == "__main__":
@@ -42,17 +42,12 @@ if __name__ == "__main__":
     category = pipline.classify(df)
     print(category)
 
-    time.sleep(10)
-
     summary, df = pipline.summarize(df, df_name, category)
     print(summary)
-
-    time.sleep(60)
 
     questions = pipline.formulate_questions(summary, 3)
     print(questions)
 
-    time.sleep(60)
 
-    pipline.visualize(summary, questions, df)
+    figures = pipline.visualize(questions, df)
     
