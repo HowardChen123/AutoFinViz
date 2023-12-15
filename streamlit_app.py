@@ -4,25 +4,34 @@ import pandas as pd
 
 st.title('AutoFinViz')
 
-# Create a form for the OpenAI API Key Input
-with st.form("api_key_form"):
-    openai_api_key = st.text_input('Enter your OpenAI API key', type='password')
-    submit_key = st.form_submit_button('Submit API Key')
+# Using session state to track whether the key has been submitted
+if 'key_submitted' not in st.session_state:
+    st.session_state.key_submitted = False
 
-if submit_key and openai_api_key:
-    openai.api_key = openai_api_key
-    st.success('API Key saved!')
-else:
-    st.stop()
+if 'file_uploaded' not in st.session_state:
+    st.session_state.file_uploaded = False
+
+# OpenAI API Key Input
+if not st.session_state.key_submitted:
+    with st.form("api_key_form"):
+        openai_api_key = st.text_input('Enter your OpenAI API key', type='password')
+        submit_key = st.form_submit_button('Submit API Key')
+
+    if submit_key and openai_api_key:
+        openai.api_key = openai_api_key
+        st.session_state.key_submitted = True
+        st.success('API Key saved!')
 
 # File Uploader
-uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+if st.session_state.key_submitted and not st.session_state.file_uploaded:
+    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
 
-if uploaded_file is not None:
-    # Create a DataFrame and display it in a form
-    with st.form("dataframe_form"):
+    if uploaded_file is not None:
         df = pd.read_csv(uploaded_file)
+        st.session_state.file_uploaded = True
+        # Display the DataFrame
         st.write(df)
-        st.form_submit_button('Confirm Data')
-else:
-    st.stop()
+
+# Remove everything after actions are complete
+if st.session_state.key_submitted and st.session_state.file_uploaded:
+    st.empty()
