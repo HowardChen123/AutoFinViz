@@ -42,7 +42,7 @@ if st.session_state.key_submitted and st.session_state.file_uploaded:
     pipeline = Pipeline()
 
     # Run summarize method and get the summary
-    summary, df = pipeline.summarize(df, df_name=df_name, category="Market Data")
+    summary, df = pipeline.summarize(df, df_name=df_name, category="Market Dataset")
 
     # Display the returned summary in a form
     with st.form("summary_form"):
