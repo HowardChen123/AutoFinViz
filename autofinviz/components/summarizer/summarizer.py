@@ -6,7 +6,6 @@ from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.schema.output_parser import StrOutputParser
 from langchain.output_parsers.json import SimpleJsonOutputParser
 from langchain.prompts import PromptTemplate
-import config
 
 class Summarizer():
     def __init__(self, model="gpt-3.5-turbo") -> None:
@@ -176,7 +175,7 @@ class Summarizer():
 
 
 if __name__ == "__main__":
-
+    import config
     summarizer = Summarizer()
 
     df = pd.read_csv("example/data/Stock_price_TSLA.csv")
