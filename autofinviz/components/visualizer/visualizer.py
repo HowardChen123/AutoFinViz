@@ -99,6 +99,7 @@ class Visualizer():
 
             # DO NOT MODIFY ANYTHNIG BELOW
             # Dataframe 'df' is already defined so NO NEED TO CONSTRUCT DATAFRAME "df"
+            fig = plot(df)
             fig.write_image("example/figures/{viz['title']}.png")
             fig.show()
             ```
@@ -225,7 +226,7 @@ class Visualizer():
 if __name__ == "__main__":
 
     visualizer = Visualizer()
-    questions = [{'index': 0, 'title': 'Stock Price Movement', 'visualization_type': 'OHLC Chart', 'x_axis': ['Date'], 'y_axis': ['Open', 'High', 'Low', 'Close']}]
-    df = pd.read_csv("example/data/Stock_price_TSLA.csv")
+    questions = [{'index': 0, 'title': 'Monthly Inflation Rates for Various Categories', 'visualization_type': 'Time Series graph with a range slider', 'x_axis': ['Date'], 'y_axis': ['Inflation rate', 'Core inflation rate']}]
+    df = pd.read_csv("example/data/Consumer_price_index.csv")
 
     visualizer.visualize(questions, df)

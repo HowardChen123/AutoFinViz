@@ -17,7 +17,7 @@ class Summarizer():
         prompt_files = {
             "Market Dataset": 'autofinviz/components/summarizer/prompts/market_summarizer.tmpl',
             "Economic Dataset": 'autofinviz/components/summarizer/prompts/economic_summarizer.tmpl',
-            "Corporate Dataset": 'autofinviz/components/summarizer/prompts/corporate_summarizer.tmpl'
+            "Corporate Financial Dataset": 'autofinviz/components/summarizer/prompts/corporate_summarizer.tmpl'
         }
 
         file_path = prompt_files.get(category)
@@ -108,7 +108,7 @@ class Summarizer():
         for column in df.columns:
             col_data = df[column]
             dtype = col_data.dtype
-
+            
             # Determine the data type
             if dtype in [int, float, complex]:
                 dtype_str = "number"
@@ -173,8 +173,11 @@ class Summarizer():
             "dataset_description": "",
             "fields": base_summary,
         }
-        summary = self.add_descriptions(summary)
-        print(summary)
+
+        ## Corporate Financial Dataset consists of too many columns, so GPT cannot easily return the summary with desciption
+        if category != "Corporate Financial Dataset":
+            summary = self.add_descriptions(summary)
+
         return summary, df
 
 
