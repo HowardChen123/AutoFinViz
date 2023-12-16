@@ -53,6 +53,5 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
     summary, st.session_state.df = pipeline.summarize(st.session_state.df, df_name=df_name, category=category)
 
     # Display the returned summary in a form
-    with st.form("summary_form"):
-        st.write("Summary:")
-        st.write(json_to_readable(summary))
+    st.write("Summary:")
+    st.write(json_to_readable(summary))
