@@ -4,6 +4,7 @@ import pandas as pd
 from autofinviz.components.pipeline import Pipeline
 import os
 from autofinviz.utils import json_to_readable
+import time
 
 st.title('AutoFinViz')
 
@@ -45,6 +46,8 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
 
     # Run summarize method and get the summary
     category = pipeline.classify(st.session_state.df)
+
+    time.sleep(10)
 
     # Run summarize method and get the summary
     summary, st.session_state.df = pipeline.summarize(st.session_state.df, df_name=df_name, category=category)
