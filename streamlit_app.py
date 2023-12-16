@@ -52,6 +52,15 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
     # Run summarize method and get the summary
     summary, st.session_state.df = pipeline.summarize(st.session_state.df, df_name=df_name, category=category)
 
-    # Display the returned summary in a form
-    st.write("Summary:")
-    st.write(json_to_readable(summary))
+    # Display the dataset description
+    st.markdown("### Dataset Description")
+    st.write(summary['dataset_description'])
+
+    # Display each field with its properties
+    st.markdown("### Field Details")
+    for field in summary['fields']:
+        column_name = field['column']
+        properties = field['properties']
+
+        st.markdown(f"#### {column_name}")
+        st.json(properties)
