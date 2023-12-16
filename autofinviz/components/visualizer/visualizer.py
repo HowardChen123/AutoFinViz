@@ -5,16 +5,11 @@ from langchain.document_loaders.parsers import LanguageParser
 from langchain.text_splitter import Language
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
-from langchain.output_parsers.json import SimpleJsonOutputParser
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.chains import RetrievalQA
 
-
-from autofinviz.utils import generateLLMResponse_viz, preprocess_code, get_globals_dict
-
-# import seaborn as sns
-# import matplotlib.pyplot as plt
+from autofinviz.utils import preprocess_code, get_globals_dict
 
 class Visualizer():
     def __init__(self, model="gpt-3.5-turbo") -> None:

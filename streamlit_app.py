@@ -64,3 +64,20 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
 
         st.markdown(f"#### {column_name}")
         st.json(properties)
+
+    time.sleep(60)
+    
+    # Run question formulation
+    question_formulations = pipeline.formulate_questions(summary, category, 3)
+
+    # Displaying the data using Markdown
+    st.markdown("### Question Formulations")
+
+    for question in question_formulations:
+        st.markdown(f"""
+        #### Question {question['index']}: {question['title']}
+        - **Visualization Type:** {question['visualization_type']}
+        - **X-axis:** {', '.join(question['x_axis'])}
+        - **Y-axis:** {', '.join(question['y_axis'])}
+        """)
+        st.markdown("---")  # Adding a separator line
