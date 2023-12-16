@@ -1,0 +1,53 @@
+[
+    {"visualization_type": "Time Series Graph with slider", "parameter": """
+        df (pd.DataFrame): DataFrame containing the data for the plot.
+        date (str): Column name in `df` representing the date axis.
+        measurement (str): Column name in `df` representing the measurement axis.
+    """}, 
+    {"visualization_type": "Multi-Measurment Time Series Graph", "parameter": """
+        df (pd.DataFrame): df (pd.DataFrame): DataFrame containing the data for the plot.
+        date (str): Column name in `df` representing the date axis.
+        measurements (List[str]): List of column names in `df` representing the multiple measurement axes.
+    """},
+    {"visualization_type": "OHLC Chart", "parameter": """
+        df (pd.DataFrame): DataFrame containing the OHLC data.
+        date (str): Column name in `df` representing the dates.
+        open (str): Column name in `df` representing the opening prices.
+        high (str): Column name in `df` representing the highest prices.
+        low (str): Column name in `df` representing the lowest prices.
+        close (str): Column name in `df` representing the closing prices.
+    """},
+    {"visualization_type": "Candlestick Chart", "parameter": """
+        df (pd.DataFrame): DataFrame containing the data for the candlestick chart.
+        date (str): Column name in `df` representing the dates.
+        open (str): Column name in `df` representing the opening prices.
+        high (str): Column name in `df` representing the highest prices during the period.
+        low (str): Column name in `df` representing the lowest prices during the period.
+        close (str): Column name in `df` representing the closing prices.
+    """},
+    {"visualization_type": "Moving Average Graph", "parameter": """
+        df (pd.DataFrame): DataFrame containing the data for the plot. Must include 'Date' and 'Close' columns.
+        date_col (str): Column name in `df` representing the date axis.
+        close_col (str): Column name in `df` representing the closing price.
+    """},
+    {"visualization_type": "RSI Graph", "parameter": """
+        df (pd.DataFrame): DataFrame containing the data for the calculation. Must include 'Date' and 'Close' columns.
+        date_col (str): Column name in `df` representing the date axis.
+        close_col (str): Column name in `df` representing the closing price.
+    """},
+    {"visualization_type": "Moving Average Convergence Divergence", "parameter": """
+        df (pd.DataFrame): DataFrame containing the data for the calculation. Must include 'Date' and 'Close' columns.
+        date_col (str): Column name in `df` representing the date axis.
+        close_col (str): Column name in `df` representing the closing price.
+    """},
+    {"visualization_type": "Waterfall Chart", "parameter": """
+        x_labels (list): A list of strings representing the categories or stages in the waterfall chart.
+        y_values (list): A list of numerical values corresponding to each category or stage. Positive values represent increases, and negative values represent decreases.
+    """},
+    {"visualization_type": "Funnel Chart", "parameter": """
+        df (pd.DataFrame): A dictionary with keys representing column names and values as lists of data points. 
+                 It should contain data for both 'x' and 'y' axes of the funnel chart.
+        x_col (str): The column from data to be used as values (quantitative axis) of the funnel.
+        y_col (str): The column from data to be used as stages (qualitative axis) of the funnel.
+    """}
+]

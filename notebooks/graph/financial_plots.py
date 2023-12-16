@@ -7,31 +7,8 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 
 
-def timeseries(df: pd.DataFrame, date: str, measurement: str, title: str = "Time Series Plot", line_color: str = 'blue'):
-    """
-    Plots a time series graph using Plotly based on specified date and measurement columns in a DataFrame.
-
-    Parameters:
-    df (pd.DataFrame): DataFrame containing the data for the plot.
-    date (str): Column name in `df` representing the date axis.
-    measurement (str): Column name in `df` representing the measurement axis.
-    title (str, optional): Title of the plot. Default is 'Time Series Plot'.
-    line_color (str, optional): Color of the line in the plot. Default is 'blue'.
-
-    Returns:
-    None: Displays the plot directly using Plotly.
-    """
-
-    # Ensure the date column is in datetime format
-    if not is_datetime(df[date]):
-        df[date] = pd.to_datetime(df[date], infer_datetime_format=True, errors='coerce')
-
-    # Create the figure
-    fig = go.Figure([go.Scatter(x=df[date], y=df[measurement], line=dict(color=line_color))])
-    fig.update_layout(title=title, xaxis_title=date, yaxis_title=measurement)
-    fig.show()
-
-
+## Time Series Graph with slider
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 def timeseries_slider_selector(df: pd.DataFrame, date: str, measurement: str, 
                                 title: str = "Time Series Plot"):
 
@@ -49,8 +26,7 @@ def timeseries_slider_selector(df: pd.DataFrame, date: str, measurement: str,
     """
 
     # Ensure the date column is in datetime format
-    if not is_datetime(df[date]):
-        df[date] = pd.to_datetime(df[date], infer_datetime_format=True, errors='coerce')
+    df[date] = pd.to_datetime(df[date], infer_datetime_format=True, errors='coerce')
 
     # Create the figure with range slider and selector
     fig = px.line(df, x=date, y=measurement, title=title)
@@ -66,9 +42,10 @@ def timeseries_slider_selector(df: pd.DataFrame, date: str, measurement: str,
             ])
         )
     )
-    fig.show()
+    return fig
 
-
+## Multi-Measurment Time Series Graph
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 def multi_timeseries(df: pd.DataFrame, date: str, measurements: List[str], 
                                 title: str = "Time Series Plot"):
 
@@ -88,8 +65,7 @@ def multi_timeseries(df: pd.DataFrame, date: str, measurements: List[str],
     ValueError: If the specified columns do not exist in the DataFrame or if the date column is not in a proper date format.
     """
     # Ensure the date column is in datetime format
-    if not is_datetime(df[date]):
-        df[date] = pd.to_datetime(df[date], infer_datetime_format=True, errors='coerce')
+    df[date] = pd.to_datetime(df[date], infer_datetime_format=True, errors='coerce')
     
     # Create the figure with multiple time series
     fig = px.line(df, x=date, y=measurements, hover_data={date: "|%B %d, %Y"}, title=title)
@@ -97,10 +73,10 @@ def multi_timeseries(df: pd.DataFrame, date: str, measurements: List[str],
     # Update x-axis formatting
     fig.update_xaxes(dtick="M1", tickformat="%b\n%Y")
 
-    # Display the figure
-    fig.show()
+    return fig
 
-
+## OHLC Chart
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 def ohlc_chart(df: pd.DataFrame, date: str, open: str, high: str, low: str, close: str, volume: str):
     """
     Plots an OHLC (Open, High, Low, Close) chart using Plotly, suitable for financial data analysis.
@@ -112,27 +88,21 @@ def ohlc_chart(df: pd.DataFrame, date: str, open: str, high: str, low: str, clos
     high (str): Column name in `df` representing the highest prices.
     low (str): Column name in `df` representing the lowest prices.
     close (str): Column name in `df` representing the closing prices.
-    volume (str): Column name in `df` representing the trading volume
 
     Returns:
     None: Directly displays the OHLC chart using Plotly.
     """
 
     # Ensure the date column is in datetime format
-    if not is_datetime(df[date]):
-        df[date] = pd.to_datetime(df[date], infer_datetime_format=True, errors='coerce')
-
-    fig = make_subplots(rows=2, cols=1)
+    df[date] = pd.to_datetime(df[date], infer_datetime_format=True, errors='coerce')
 
     #OHLC Plot
-    fig.add_trace(go.Ohlc(x=df[date], open=df[open], high=df[high], low=df[low], close=df[close], name='Price'), row=1, col=1)
-    #Volume PLot
-    fig.add_trace(go.Scatter(x=df[date], y=df[volume], name='Volume'), row=2, col=1)
+    fig = go.Figure(go.Ohlc(x=df[date], open=df[open], high=df[high], low=df[low], close=df[close], name='Price'), row=1, col=1)
+    
+    return fig
 
-    fig.update(layout_xaxis_rangeslider_visible=False)
-    fig.show()
-
-
+## Candlestick Chart
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 def candlestick_chart(df: pd.DataFrame, date: str, open: str, high: str, low: str, close: str):
     """
     Plots a candlestick chart using Plotly, typically used for financial data analysis to visualize price movements.
@@ -150,17 +120,17 @@ def candlestick_chart(df: pd.DataFrame, date: str, open: str, high: str, low: st
     """
 
     # Ensure the date column is in datetime format
-    if not is_datetime(df[date]):
-        df[date] = pd.to_datetime(df[date], infer_datetime_format=True, errors='coerce')
+    df[date] = pd.to_datetime(df[date], infer_datetime_format=True, errors='coerce')
 
     # Create and display the candlestick chart
     fig = go.Figure(data=[go.Candlestick(x=df[date], open=df[open], high=df[high], low=df[low], close=df[close])])
-    fig.show()
+    return fig
 
-
+## Moving Average Graph
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 def plot_moving_averages(df: pd.DataFrame, date_col: str, close_col: str):
     """
-    Plots Exponential Moving Averages (EMA) and Simple Moving Averages (SMA) along with the closing price using Plotly.
+    Plots Moving Average Graph along with the closing price using Plotly, i.e. Exponential Moving Averages (EMA) and Simple Moving Averages (SMA)
 
     Parameters:
     df (pd.DataFrame): DataFrame containing the data for the plot. Must include 'Date' and 'Close' columns.
@@ -176,8 +146,7 @@ def plot_moving_averages(df: pd.DataFrame, date_col: str, close_col: str):
     """
 
     # Ensure the date column is in datetime format
-    if not is_datetime(df[date_col]):
-        df[date_col] = pd.to_datetime(df[date_col], infer_datetime_format=True, errors='coerce')
+    df[date_col] = pd.to_datetime(df[date_col], infer_datetime_format=True, errors='coerce')
 
     # Calculate EMA and SMA
     df['EMA_9'] = df[close_col].ewm(9).mean().shift()
@@ -197,9 +166,10 @@ def plot_moving_averages(df: pd.DataFrame, date_col: str, close_col: str):
     fig.add_trace(go.Scatter(x=df[date_col], y=df['SMA_30'], name='SMA 30'))
     fig.add_trace(go.Scatter(x=df[date_col], y=df[close_col], name='Close', opacity=0.3))
     
-    fig.show()
+    return fig
 
-
+## RSI Graph
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 def plot_rsi(df: pd.DataFrame, date_col: str, close_col: str, n: int = 14):
     """
     Calculates and plots the Relative Strength Index (RSI) using Plotly.
@@ -220,8 +190,7 @@ def plot_rsi(df: pd.DataFrame, date_col: str, close_col: str, n: int = 14):
     """
 
     # Ensure the date column is in datetime format
-    if not is_datetime(df[date_col]):
-        df[date_col] = pd.to_datetime(df[date_col], infer_datetime_format=True, errors='coerce')
+    df[date_col] = pd.to_datetime(df[date_col], infer_datetime_format=True, errors='coerce')
 
     # RSI calculation
     delta = df[close_col].diff()
@@ -232,9 +201,10 @@ def plot_rsi(df: pd.DataFrame, date_col: str, close_col: str, n: int = 14):
 
     # Create and display the RSI plot
     fig = go.Figure(go.Scatter(x=df[date_col], y=rsi, name='RSI'))
-    fig.show()
+    return fig
 
-
+## Moving Average Convergence Divergence
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 def plot_macd(df: pd.DataFrame, date_col: str, close_col: str):
     """
     Calculates and plots the Moving Average Convergence Divergence (MACD) and its signal line along with the closing price.
@@ -255,8 +225,7 @@ def plot_macd(df: pd.DataFrame, date_col: str, close_col: str):
     """
 
     # Ensure the date column is in datetime format
-    if not is_datetime(df[date_col]):
-        df[date_col] = pd.to_datetime(df[date_col], infer_datetime_format=True, errors='coerce')
+    df[date_col] = pd.to_datetime(df[date_col], infer_datetime_format=True, errors='coerce')
 
     # Calculate EMA 12, EMA 26, MACD, and MACD signal
     EMA_12 = df[close_col].ewm(span=12, min_periods=12).mean()
@@ -271,9 +240,9 @@ def plot_macd(df: pd.DataFrame, date_col: str, close_col: str):
     fig.add_trace(go.Scatter(x=df[date_col], y=EMA_26, name='EMA 26'), row=1, col=1)
     fig.add_trace(go.Scatter(x=df[date_col], y=df['MACD'], name='MACD'), row=2, col=1)
     fig.add_trace(go.Scatter(x=df[date_col], y=df['MACD_signal'], name='Signal line'), row=2, col=1)
-    fig.show()
+    return fig
 
-
+## Waterfall Chart
 def plot_waterfall(x_labels: list, y_values: list, text_labels: list, title: str = "Profit and Loss"):
     """
     Creates and displays a waterfall chart using Plotly, typically used for financial analysis to show changes in metrics.
@@ -305,9 +274,9 @@ def plot_waterfall(x_labels: list, y_values: list, text_labels: list, title: str
 
     fig.update_layout(title = title, showlegend = True)
 
-    fig.show()
+    return fig
 
-
+## Funnel Chart
 def plot_funnel_chart(data: pd.DataFrame, x_col: str, y_col: str, title: str = "Funnel Chart"):
     """
     Creates and displays a funnel chart using Plotly Express, ideal for representing stages in a process or pipeline.
@@ -326,9 +295,9 @@ def plot_funnel_chart(data: pd.DataFrame, x_col: str, y_col: str, title: str = "
     # Create and display the funnel chart
     fig = px.funnel(data, x=x_col, y=y_col)
     fig.update_layout(title=title)
-    fig.show()
+    return fig
 
-
+## Pie Chart
 def plot_pie_chart(labels: list, values: list, title: str = "Pie Chart"):
     """
     Creates and displays a pie chart using Plotly, suitable for showing the composition of a dataset.
@@ -345,4 +314,4 @@ def plot_pie_chart(labels: list, values: list, title: str = "Pie Chart"):
     # Create and display the pie chart
     fig = go.Figure(data=[go.Pie(labels=labels, values=values, textinfo='label+percent', insidetextorientation='radial')])
     fig.update_layout(title=title)
-    fig.show()
+    return fig
