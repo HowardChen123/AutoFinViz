@@ -175,15 +175,3 @@ class Summarizer():
             summary = self.add_descriptions(summary)
 
         return summary, df
-
-
-if __name__ == "__main__":
-    import config
-    summarizer = Summarizer()
-
-    df = pd.read_csv("example/data/Stock_price_TSLA.csv")
-    df_name = "Stock_price_TSLA"
-    category = "Market Dataset"
-
-    summary, df = summarizer.summarize(df, df_name, category)
-    print(summary)

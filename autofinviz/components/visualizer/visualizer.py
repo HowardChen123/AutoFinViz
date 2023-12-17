@@ -12,9 +12,6 @@ from langchain.chains import RetrievalQA
 
 from autofinviz.utils import preprocess_code, get_globals_dict
 
-# import seaborn as sns
-# import matplotlib.pyplot as plt
-
 class Visualizer():
     def __init__(self, model="gpt-3.5-turbo") -> None:
         model = ChatOpenAI(model_name=model)
@@ -104,8 +101,6 @@ class Visualizer():
             THE OUTPUT SHOULD ONLY USE THE PYTHON FORMAT ABOVE.
             MUST execute the plot(df) after defining the plot().
             """
-            # fig.write_image("example/figures/{viz['title']}.png")
-            # fig.show()
             def generate_code(question):
                 results = self.qa_chain({"query": question})
                 code = results["result"]
@@ -126,6 +121,9 @@ class Visualizer():
                     exec(code, global_dict, exec_vars)
 
                     fig = exec_vars.get('fig')
+                    # fig.write_image("example/figures/{viz['title']}.png")
+                    # fig.show()
+                    
                     print(type(fig))
                     if fig != None:
                         visualizer_results.append({"fig": fig, "code": code})
@@ -137,12 +135,3 @@ class Visualizer():
                     count += 1
         
         return visualizer_results
-
-
-if __name__ == "__main__":
-
-    visualizer = Visualizer()
-    questions = [{'index': 0, 'title': 'Monthly Inflation Rates for Various Categories', 'visualization_type': 'Time Series graph with a range slider', 'x_axis': ['Date'], 'y_axis': ['Inflation rate', 'Core inflation rate']}]
-    df = pd.read_csv("example/data/Consumer_price_index.csv")
-
-    visualizer.visualize(questions, df)

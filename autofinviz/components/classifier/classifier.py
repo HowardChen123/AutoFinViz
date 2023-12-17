@@ -29,15 +29,3 @@ class Classifier():
         """
         chain = self.prompt_template | self.model | self.output_parser
         return self.validate_output(chain.invoke({"input": input}))
-
-
-if __name__ == "__main__":
-
-    import config
-    classifier = Classifier()
-
-    df = pd.read_csv("example/data/Stock_price_TSLA.csv")
-    df_name = "Stock_price_TSLA"
-
-    category = classifier.classify(df)
-    print(category)
