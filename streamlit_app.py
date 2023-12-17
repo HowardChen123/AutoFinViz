@@ -91,8 +91,8 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
 
     visualizer_results = pipeline.visualize([question], st.session_state.df)
 
-    for fig, code in visualizer_results:
-
+    for visualizer_result in visualizer_results:
+        fig, code = visualizer_result['fig'], visualizer_result['code']
         # Display the Plotly plot
         st.plotly_chart(fig, use_container_width=True)
 
