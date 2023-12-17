@@ -1,9 +1,7 @@
 from autofinviz.components.classifier import Classifier
 from autofinviz.components.summarizer import Summarizer
-# from autofinviz.components.question import QuestionFormulator
-# from autofinviz.components.visualizer import Visualizer
-
-import time
+from autofinviz.components.question import QuestionFormulator
+from autofinviz.components.visualizer import Visualizer
 
 import pandas as pd
 
@@ -14,8 +12,8 @@ class Pipeline(object):
         """
         self.classifier = Classifier()
         self.summarizer = Summarizer()
-        # self.question_formulator = QuestionFormulator()
-        # self.visualizer = Visualizer()
+        self.question_formulator = QuestionFormulator()
+        self.visualizer = Visualizer()
         
         self.data = None
 
