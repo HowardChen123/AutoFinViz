@@ -1,10 +1,7 @@
 import streamlit as st
-import openai
 import pandas as pd
 from autofinviz.components.pipeline import Pipeline
 import os
-from autofinviz.utils import json_to_readable
-import time
 
 st.title('AutoFinViz')
 
@@ -47,13 +44,12 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
     # Run summarize method and get the summary
     category = pipeline.classify(st.session_state.df)
 
-    time.sleep(60)
-
     # Run summarize method and get the summary
     summary, st.session_state.df = pipeline.summarize(st.session_state.df, df_name=df_name, category=category)
 
     # Display the dataset description
     st.markdown("### Dataset Description")
+    print(summary)
     st.write(summary['dataset_description'])
 
     # Display each field with its properties
@@ -64,3 +60,35 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
 
         st.markdown(f"#### {column_name}")
         st.json(properties)
+    
+    # Run question formulation
+    question_formulations = pipeline.formulate_questions(summary, category, 3)
+
+    # Displaying the data using Markdown
+    st.markdown("### Question Formulations")
+
+    for question in question_formulations:
+
+        x_axis = question['x_axis'] if isinstance(question['x_axis'], list) else [question['x_axis']]
+        y_axis = question['y_axis'] if isinstance(question['y_axis'], list) else [question['y_axis']]
+
+        st.markdown(f"""
+        #### Question {question['index']}: {question['title']}
+        - **Visualization Type:** {question['visualization_type']}
+        - **X-axis:** {', '.join(x_axis)}
+        - **Y-axis:** {', '.join(y_axis)}
+        """)
+        st.markdown("---")  # Adding a separator line
+
+    # Displaying the visualizations and code
+    st.markdown("### Visualizations and Code")
+
+    visualizer_results = pipeline.visualize(question_formulations, st.session_state.df)
+
+    for visualizer_result in visualizer_results:
+        fig, code = visualizer_result['fig'], visualizer_result['code']
+        # Display the Plotly plot
+        st.plotly_chart(fig, use_container_width=True)
+
+        # Display the code
+        st.code(code, language='python')

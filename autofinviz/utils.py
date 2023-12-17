@@ -13,11 +13,11 @@ def preprocess_code(code: str) -> str:
     code = code.replace("<transforms>", "")
 
     # remove all text after chart = plot(df)
-    # if "chart = plot(df)" in code:
-    #     # print(code)
-    #     index = code.find("chart = plot(df)")
-    #     if index != -1:
-    #         code = code[: index + len("chart = plot(df)")]
+    if "fig = plot(df)" in code:
+        # print(code)
+        index = code.find("fig = plot(df)")
+        if index != -1:
+            code = code[: index + len("fig = plot(df)")]
 
     if "```" in code:
         pattern = r"```(?:\w+\n)?([\s\S]+?)```"
@@ -32,8 +32,8 @@ def preprocess_code(code: str) -> str:
             code = code[index:]
 
     code = code.replace("```", "")
-    if "chart = plot(df)" not in code:
-        code = code + "\nchart = plot(df)"
+    if "fig = plot(df)" not in code:
+        code = code + "\fig = plot(df)"
     return code
 
 def get_globals_dict(code_string, df):

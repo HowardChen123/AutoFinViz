@@ -1,9 +1,7 @@
 from autofinviz.components.classifier import Classifier
 from autofinviz.components.summarizer import Summarizer
-# from autofinviz.components.question import QuestionFormulator
-# from autofinviz.components.visualizer import Visualizer
-
-import time
+from autofinviz.components.question import QuestionFormulator
+from autofinviz.components.visualizer import Visualizer
 
 import pandas as pd
 
@@ -14,8 +12,8 @@ class Pipeline(object):
         """
         self.classifier = Classifier()
         self.summarizer = Summarizer()
-        # self.question_formulator = QuestionFormulator()
-        # self.visualizer = Visualizer()
+        self.question_formulator = QuestionFormulator()
+        self.visualizer = Visualizer()
         
         self.data = None
 
@@ -34,7 +32,9 @@ class Pipeline(object):
 
 if __name__ == "__main__":
 
-    pipline = Pipeline()
+    import config
+
+    pipeline = Pipeline()
 
     ## Market Dataset Example
     df = pd.read_csv("example/data/Stock_price_TSLA.csv")
@@ -51,22 +51,22 @@ if __name__ == "__main__":
     # df_name = "Income_statement"
 
     print("Classification")
-    category = pipline.classify(df)
+    category = pipeline.classify(df)
     print(category)
     print("\n")
 
     print("Summarization")
-    summary, df = pipline.summarize(df, df_name, category)
+    summary, df = pipeline.summarize(df, df_name, category)
     print(summary)
     print("\n")
 
     print("Question Formulation")
-    questions = pipline.formulate_questions(summary, category, 3)
+    questions = pipeline.formulate_questions(summary, category, 3)
     print(questions)
     print("\n")
 
     print("Visualization")
-    visualizer_results = pipline.visualize(questions, df)
+    visualizer_results = pipeline.visualize(questions, df)
     print("\n")
 
     print("Result")
