@@ -32,6 +32,8 @@ class Pipeline(object):
 
 if __name__ == "__main__":
 
+    import config
+
     pipeline = Pipeline()
 
     ## Market Dataset Example
