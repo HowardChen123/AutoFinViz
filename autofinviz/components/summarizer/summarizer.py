@@ -185,4 +185,5 @@ if __name__ == "__main__":
     df_name = "Stock_price_TSLA"
     category = "Market Dataset"
 
-    summarizer.summarize(df, df_name, category)
+    summary, df = summarizer.summarize(df, df_name, category)
+    print(summary)
