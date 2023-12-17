@@ -1,10 +1,7 @@
 import streamlit as st
-import openai
 import pandas as pd
 from autofinviz.components.pipeline import Pipeline
 import os
-from autofinviz.utils import json_to_readable
-import time
 
 st.title('AutoFinViz')
 
