@@ -95,7 +95,6 @@ class Visualizer():
             # DO NOT MODIFY ANYTHNIG BELOW
             # Dataframe 'df' is already defined so NO NEED TO CONSTRUCT DATAFRAME "df"
             fig = plot(df)
-            fig.write_image("example/figures/{viz['title']}.png")
             fig.show()
             ```
             THE OUTPUT SHOULD ONLY USE THE PYTHON FORMAT ABOVE.
@@ -120,6 +119,7 @@ class Visualizer():
 
                     print(code)
                     fig = exec(code, global_dict, exec_vars)
+                    fig.write_image("example/figures/{viz['title']}.png")
 
                     fig = exec_vars.get('fig')
                     if fig != None:
