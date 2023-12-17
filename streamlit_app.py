@@ -47,8 +47,6 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
     # Run summarize method and get the summary
     category = pipeline.classify(st.session_state.df)
 
-    time.sleep(60)
-
     # Run summarize method and get the summary
     summary, st.session_state.df = pipeline.summarize(st.session_state.df, df_name=df_name, category=category)
 
@@ -64,8 +62,6 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
 
         st.markdown(f"#### {column_name}")
         st.json(properties)
-
-    time.sleep(60)
     
     # Run question formulation
     question_formulations = pipeline.formulate_questions(summary, category, 3)
@@ -89,7 +85,7 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
     # Displaying the visualizations and code
     st.markdown("### Visualizations and Code")
 
-    visualizer_results = pipeline.visualize([question], st.session_state.df)
+    visualizer_results = pipeline.visualize(question_formulations, st.session_state.df)
 
     for visualizer_result in visualizer_results:
         fig, code = visualizer_result['fig'], visualizer_result['code']
