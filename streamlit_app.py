@@ -85,3 +85,11 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
         - **Y-axis:** {', '.join(y_axis)}
         """)
         st.markdown("---")  # Adding a separator line
+
+        fig, code = pipeline.visualize([question], st.session_state.df)
+
+        # Display the Plotly plot
+        st.plotly_chart(fig, use_container_width=True)
+
+        # Display the code
+        st.code(code, language='python')
