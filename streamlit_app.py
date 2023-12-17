@@ -86,12 +86,15 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
         """)
         st.markdown("---")  # Adding a separator line
 
+    # Displaying the visualizations and code
+    st.markdown("### Visualizations and Code")
+
     visualizer_results = pipeline.visualize([question], st.session_state.df)
 
     for fig, code in visualizer_results:
 
         # Display the Plotly plot
-        st.plotly_chart(visualizer_results[0]['fig'], use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True)
 
         # Display the code
-        st.code(visualizer_results[0]['code'], language='python')
+        st.code(code, language='python')
