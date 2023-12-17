@@ -52,7 +52,7 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
 
     # Display the dataset description
     st.markdown("### Dataset Description")
-    st.write(summary)
+    print(summary)
     st.write(summary['dataset_description'])
 
     # Display each field with its properties
