@@ -17,7 +17,7 @@ class Visualizer():
 
         ## Load .py file
         loader = GenericLoader.from_filesystem(
-            "/Users/borisyu/Desktop/github/AutoFinViz/notebooks/graph",
+            "notebooks/graph",
             glob="**/*",
             suffixes=[".py"],
             parser=LanguageParser(language=Language.PYTHON, parser_threshold=500),
