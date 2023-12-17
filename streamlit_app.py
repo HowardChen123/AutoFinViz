@@ -74,10 +74,14 @@ if st.session_state.key_submitted and st.session_state.file_uploaded and st.sess
     st.markdown("### Question Formulations")
 
     for question in question_formulations:
+
+        x_axis = question['x_axis'] if isinstance(question['x_axis'], list) else [question['x_axis']]
+        y_axis = question['y_axis'] if isinstance(question['y_axis'], list) else [question['y_axis']]
+
         st.markdown(f"""
         #### Question {question['index']}: {question['title']}
         - **Visualization Type:** {question['visualization_type']}
-        - **X-axis:** {', '.join(question['x_axis'])}
-        - **Y-axis:** {', '.join(question['y_axis'])}
+        - **X-axis:** {', '.join(x_axis)}
+        - **Y-axis:** {', '.join(y_axis)}
         """)
         st.markdown("---")  # Adding a separator line

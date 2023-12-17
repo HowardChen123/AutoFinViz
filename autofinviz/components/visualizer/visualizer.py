@@ -219,7 +219,7 @@ class Visualizer():
 
 
 if __name__ == "__main__":
-
+    import config
     visualizer = Visualizer()
     questions = [{'index': 0, 'title': 'Monthly Inflation Rates for Various Categories', 'visualization_type': 'Time Series graph with a range slider', 'x_axis': ['Date'], 'y_axis': ['Inflation rate', 'Core inflation rate']}]
     df = pd.read_csv("example/data/Consumer_price_index.csv")
