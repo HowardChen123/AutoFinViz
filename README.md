@@ -1,7 +1,5 @@
 # AutoFinViz
 
-# AutoFinViz
-
 ## Overview
 AutoFinViz is an innovative financial visualization tool powered by Large Language Models (LLMs). It is designed to address the complexities of financial data analysis by integrating advanced LLM capabilities for insightful data visualization. AutoFinViz offers a unique approach to processing financial datasets, making the visualization process more efficient and user-friendly.
 
