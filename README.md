@@ -19,10 +19,16 @@ pip install -r requirements.txt
 ```
 
 ## Usage
+
+### Running Locally
 Run the Streamlit app to interact with the tool:
 ```bash
 streamlit run streamlit_app.py
 ```
+
+### Live Application
+
+For immediate access to AutoFinViz, visit the live application hosted on Streamlit Cloud: [AutoFinViz on Streamlit Cloud](https://autofinviz.streamlit.app/)
 
 ## Project Paper
 For a comprehensive understanding of the concepts, methodologies, and insights behind AutoFinViz, please refer to our detailed project paper: [AutoFinViz](AutoFinViz.pdf).
